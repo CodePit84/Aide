@@ -23,6 +23,9 @@ editer "php.ini" et décommenter :
 
 ```extension=openssl```
 
+Ensuite initialiser le projet :
+```php composer.phar init``` 
+
 puis installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
