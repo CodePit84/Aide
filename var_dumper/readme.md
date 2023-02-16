@@ -26,7 +26,9 @@ editer "php.ini" et décommenter :
 Ensuite initialiser le projet :
 ```php composer.phar init``` 
 
+Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
+et "yes" à la génération (composer.json) 
 
 puis installer "var_dumper" :
 
