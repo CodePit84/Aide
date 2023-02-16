@@ -13,7 +13,7 @@ php -r "unlink('composer-setup.php');"```
 
 [Cours "Grafikart" PHP  : Autoloader 5'10]
 
-si erreur SSL, au niveau de la 1ère ligne editer "php.ini" et décommenter ```extension=openssl```
+si erreur SSL "https" Warning, au niveau de la 1ère ligne de code (php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');") editer "php.ini" et décommenter ```extension=openssl```
 
 puis installer "var_dumper" :
 
