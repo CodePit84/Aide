@@ -26,6 +26,8 @@ editer "php.ini" et décommenter :
 Ensuite initialiser le projet :
 ```php composer.phar init``` 
 
+répondez "No" aux 2 questions pour definir les dépendances.
+
 puis installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
