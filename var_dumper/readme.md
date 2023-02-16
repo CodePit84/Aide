@@ -34,5 +34,5 @@ puis installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
 
-[Cours "Grafikart" PHP  : Librairies Tierce
+[Cours "Grafikart" PHP  : Librairies Tierce 9'20]
 
