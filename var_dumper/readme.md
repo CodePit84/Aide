@@ -16,9 +16,7 @@ php -r "unlink('composer-setup.php');"
 
 [Cours "Grafikart" PHP  : Autoloader 5'10]
 
-/!\ **si erreur SSL "https" Warning, au niveau de la 1ère ligne de code**
-
-```php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"```
+/!\ **si erreur SSL "https" Warning, au niveau de la 1ère ligne de code** ```php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"```
 
 car OpenSSL n'est pas installer donc :
 editer "php.ini" et décommenter : 
