@@ -66,11 +66,13 @@ no
 
 yes
 -----------
-
-```[notice] Migrating up to DoctrineMigrations\Version20221208081548
+``` 
+[notice] Migrating up to DoctrineMigrations\Version20221208081548
 [error] Migration                                        (...)                                         
   An exception occurred while executing a query: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key const  
-  raint fails (`symrecipe`.`#sql-38eb_127`, CONSTRAINT `FK_DA88B137A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`))```
+  raint fails (`symrecipe`.`#sql-38eb_127`, CONSTRAINT `FK_DA88B137A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`))
+```
+
 ==> erreur à la suite d'un :
 ```php bin/console d:m:m```
 
