@@ -107,11 +107,11 @@ ERREUR HTTP:500
 (j'ai tout effacé pour relancer un clone de ma dernière sauvegarde GitHub qui fonctionnait...)
 
 lorsque j'ai lancé VS Code j'ai eu le message :
-(https://github.com/CodePit84/Aide/blob/main/Symfony/img/erreur1.png)
+![erreur1](https://github.com/CodePit84/Aide/blob/main/Symfony/img/erreur1.png)
 j'ai donc exécuté :
 ```composer require symfony/runtime```
 pour obtenir le message suivant : (erreur database)
-(https://github.com/CodePit84/Aide/blob/main/Symfony/img/erreur2.png)
+![erreur2](https://github.com/CodePit84/Aide/blob/main/Symfony/img/erreur2.png)
 J'ai donc ensuite copié mon dernier fichier (caché) ".env.dev.local" que j'avais toujours, et qui contenais :
 ```# DATABASE_URL="mysql://root:@127.0.0.1:3306/symrecipe?serverVersion=8"
 DATABASE_URL="mysql://root:@127.0.0.1:3306/symrecipe?serverVersion=mariadb-10.4.24"```
