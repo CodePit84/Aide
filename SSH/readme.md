@@ -11,7 +11,7 @@ sinon la clé privée n'a pas d'extension et la clé publique a l'extension ".pu
 
 taper : ```cat id_rsa.pub``` par exemple (id_rsa.pub étant le nom de votre clé publique)
 
-et copié la dans GitHub ou tout service vous demandant une clé ssh !
+et copiez la dans GitHub ou tout service vous demandant une clé ssh !
 
 ex GitHub : 
 SSH and GPG Keys
