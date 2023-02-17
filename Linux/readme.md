@@ -38,3 +38,7 @@ ouvrir :
 et décommenter :
 #WaylandEnable=false
 puis redemarrer l'ordinateur !
+
+---
+
+```ls -lah``` affiche la liste des fichiers et dossiers cachés
