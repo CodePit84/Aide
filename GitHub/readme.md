@@ -13,6 +13,16 @@
 
 ---
 
+## Github: cloner un dépot
+
+Créer un repository GitHub
+
+Ensuite avec le terminal aller dans le répertoire de destination (cd blablabla) et : 
+```git clone adresse_SSH_du_dépot_GitHub```
+
+
+---
+
 ## Github: ajouter un projet déjà créé
 
 On a l’habitude de cloner des projets qui sont déjà sur Github… voici maintenant comment mettre en ligne un projet créé localement. (version PC)
