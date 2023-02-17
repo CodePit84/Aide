@@ -1,4 +1,4 @@
-Commit et push :
+##Commit et push :
 
 ```git status```
 
@@ -13,7 +13,7 @@ Commit et push :
 
 ---
 
-Github: ajouter un projet déjà créé
+##Github: ajouter un projet déjà créé
 
 On a l’habitude de cloner des projets qui sont déjà sur Github… voici maintenant comment mettre en ligne un projet créé localement. (version PC)
 Mode d’emploi
