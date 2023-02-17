@@ -3,6 +3,8 @@ Permissions Linux :
 sudo chmod 777 -R répertoire
 ```
 
+---
+
 Linux tips :
 Alt + Tab
 Touche Windows + Tab
@@ -11,7 +13,7 @@ Touche Windows + flèche de gauche
 Touche Windows + flèche du haut
 Touche Windows + flèche du bas
 
-----
+---
 
 sur la console :
 history
@@ -23,7 +25,7 @@ Un raccourci utile aussi dans le terminal et Ctrl maj c et v pour les copier col
 [11:39]
 ou le clic sur la molette pour coller
 
-----
+---
 
 Ctrl + C pour stopper dans la console
 ou CTRL + Z
