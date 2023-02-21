@@ -36,13 +36,22 @@ Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
 
+## 3. Tapez :
 ```
 php composer.phar dump-autoload
 ```
 
-## 3. installer "var_dumper" :
+## 4. installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
 
 source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/tutoriels/composer-require-1146)
+
+## 5. rajoutez en haut de votre fichier PHP (où le dump() ou le dd() sera utilisé) :`
+```
+require __DIR__.'/vendor/autoload.php';
+```
+
+
+ 
 
