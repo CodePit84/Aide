@@ -16,6 +16,7 @@ php -r "unlink('composer-setup.php');"
 source : [Cours "Grafikart" PHP  : Autoloader 5'10]
 
 ---
+
 /!\ **si erreur SSL "https" Warning, au niveau de la 1ère ligne de code** ```php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"```
 
 car OpenSSL n'est pas installer donc :
@@ -29,6 +30,7 @@ Ensuite initialiser le projet :
 Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
+
 ---
 
 ## 2. installer "var_dumper" :
