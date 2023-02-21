@@ -47,10 +47,10 @@ php composer.phar init
 ```
 php composer.phar dump-autoload
 ```
-ou
-```
-composer dump-autoload
-```
+######ou
+######```
+######composer dump-autoload
+######```
 
 ## 4. installer "var_dumper" :
 
