@@ -1,10 +1,10 @@
-Pour installer var dumper :
+#Pour installer var dumper :
 
-(https://symfony.com/doc/current/components/var_dumper.html)
+source : (https://symfony.com/doc/current/components/var_dumper.html)
 
-installer d'abord "composer" :
+#1. installer d'abord "composer" :
 
-voir le site : (https://getcomposer.org/download/)
+source : (https://getcomposer.org/download/)
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -13,9 +13,9 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ```
 
+source : [Cours "Grafikart" PHP  : Autoloader 5'10]
 
-[Cours "Grafikart" PHP  : Autoloader 5'10]
-
+---
 /!\ **si erreur SSL "https" Warning, au niveau de la 1ère ligne de code** ```php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"```
 
 car OpenSSL n'est pas installer donc :
@@ -29,10 +29,11 @@ Ensuite initialiser le projet :
 Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
+---
 
-puis installer "var_dumper" :
+#3. installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
 
-[Cours "Grafikart" PHP  : Librairies Tierce 9'20]
+source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20]
 
