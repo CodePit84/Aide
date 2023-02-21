@@ -27,16 +27,16 @@ editer "php.ini" et décommenter :
 
 ```extension=openssl```
 
-Ensuite initialiser le projet :
+---
+
+## 2. initialiser le projet :
 ```php composer.phar init``` 
 
 Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
 
----
-
-## 2. installer "var_dumper" :
+## 3. installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
 
