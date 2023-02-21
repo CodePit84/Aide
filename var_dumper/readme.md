@@ -31,7 +31,10 @@ editer "php.ini" et décommenter :
 ---
 
 ## 2. initialiser le projet :
-```php composer.phar init``` 
+```
+php composer.phar init
+
+``` 
 
 Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
@@ -50,7 +53,10 @@ composer dump-autoload
 
 ## 4. installer "var_dumper" :
 
-```composer require --dev symfony/var-dumper```
+```
+composer require --dev symfony/var-dumper
+
+```
 
 source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/tutoriels/composer-require-1146)
 
@@ -58,7 +64,3 @@ source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/
 ```
 require __DIR__.'/vendor/autoload.php';
 ```
-
-
- 
-
