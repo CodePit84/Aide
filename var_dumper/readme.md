@@ -43,19 +43,16 @@ et "yes" à la génération (composer.json)
 ## 3. Tapez :
 ```
 php composer.phar dump-autoload
-
 ```
 ou
 ```
 composer dump-autoload
-
 ```
 
 ## 4. installer "var_dumper" :
 
 ```
 composer require --dev symfony/var-dumper
-
 ```
 
 source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/tutoriels/composer-require-1146)
