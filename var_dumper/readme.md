@@ -36,6 +36,10 @@ Laissez par défaut ou vide (sauf si partage sur le web ;) )
 répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
 
+```
+php composer.phar dump-autoload
+```
+
 ## 3. installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
