@@ -35,13 +35,13 @@ editer "php.ini" et décommenter :
 php composer.phar init
 ``` 
 
-### Laissez par défaut ou vide (sauf si partage sur le web ;) )
+#### Laissez par défaut ou vide (sauf si partage sur le web ;) )
  
-### répondez "No" aux 2 questions pour definir les dépendances.
+#### répondez "No" aux 2 questions pour definir les dépendances.
 
-### Add PSR-4 laissez "src/"
+#### Add PSR-4 laissez "src/"
 
-### et "yes" à la génération (composer.json) 
+#### et "yes" à la génération (composer.json) 
 
 ## 3. Tapez :
 ```
