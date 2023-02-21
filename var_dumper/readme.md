@@ -1,8 +1,8 @@
-#Pour installer var dumper :
+# Pour installer var dumper :
 
 source : (https://symfony.com/doc/current/components/var_dumper.html)
 
-#1. installer d'abord "composer" :
+## 1. installer d'abord "composer" :
 
 source : (https://getcomposer.org/download/)
 
@@ -31,7 +31,7 @@ répondez "No" aux 2 questions pour definir les dépendances.
 et "yes" à la génération (composer.json) 
 ---
 
-#3. installer "var_dumper" :
+## 2. installer "var_dumper" :
 
 ```composer require --dev symfony/var-dumper```
 
