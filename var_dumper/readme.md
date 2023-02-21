@@ -40,6 +40,10 @@ et "yes" à la génération (composer.json)
 ```
 php composer.phar dump-autoload
 ```
+ou
+```
+composer dump-autoload
+```
 
 ## 4. installer "var_dumper" :
 
