@@ -56,7 +56,7 @@ composer require --dev symfony/var-dumper
 
 source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/tutoriels/composer-require-1146)
 
-## 5. rajoutez en haut de votre fichier PHP (où le dump() ou le dd() sera utilisé) :`
+## 5. rajoutez en haut de votre fichier PHP (où le dump() ou le dd() sera utilisé) :
 ```
 require __DIR__.'/vendor/autoload.php';
 ```
