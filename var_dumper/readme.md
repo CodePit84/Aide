@@ -27,13 +27,11 @@ car OpenSSL n'est pas installer donc :
 editer "php.ini" et décommenter : 
 
 ```extension=openssl```
-
 ---
 
 ## 2. initialiser le projet :
 ```
 php composer.phar init
-
 ``` 
 
 Laissez par défaut ou vide (sauf si partage sur le web ;) )
