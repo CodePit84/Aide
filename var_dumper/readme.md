@@ -27,6 +27,7 @@ car OpenSSL n'est pas installer donc :
 editer "php.ini" et décommenter : 
 
 ```extension=openssl```
+
 ---
 
 ## 2. initialiser le projet :
