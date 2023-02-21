@@ -48,7 +48,7 @@ php composer.phar init
 php composer.phar dump-autoload
 ```
 ###### ou
-###### ```
+```
 composer dump-autoload
 ```
 
