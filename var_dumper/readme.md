@@ -15,7 +15,7 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ```
 
-source : [Cours "Grafikart" PHP  : Autoloader 5'10]
+source : [Cours "Grafikart" PHP  : Autoloader 5'10](https://grafikart.fr/tutoriels/autoloader-composer-php-1144)
 
 ---
 
@@ -40,5 +40,5 @@ et "yes" à la génération (composer.json)
 
 ```composer require --dev symfony/var-dumper```
 
-source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20]
+source : [Cours "Grafikart" PHP  : Librairies Tierce 9'20](https://grafikart.fr/tutoriels/composer-require-1146)
 
