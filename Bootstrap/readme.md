@@ -1,5 +1,6 @@
 Pour le stylesheet bootswatch et le script JS bootstrap :
 
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,3 +29,4 @@ Pour le stylesheet bootswatch et le script JS bootstrap :
         {% endblock %}
     </body>
 </html>
+```
