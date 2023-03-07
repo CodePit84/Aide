@@ -15,5 +15,5 @@ Pour ajouter des champs à l'entité comme :
 lastName, firstName, address, zipcode, city, phone, createdAt
 
 6bis. pour createdAt rajouter :
-``` #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $createdAt = null; ```
+```#[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeImmutable $createdAt = null;
