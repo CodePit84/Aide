@@ -33,4 +33,11 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
     private ?\DateTimeImmutable $createdAt = null;
 ```
 
+/!\ On rajoutera plus tard dans le Constructeur de l'Entity User.php
+```
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+````  
 7. blabla
