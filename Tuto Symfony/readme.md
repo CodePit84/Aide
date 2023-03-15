@@ -24,6 +24,9 @@ Pour ensuite ajouter des propriétés (ainsi que leurs get / set) à l'entité c
 
 lastName, firstName, address, zipcode, city, phone, createdAt
 
+CreatedAt sera du type datetime_immutable.
+A noté que si zipcode (code postale) choisir string de 5 caractères, sinon le premier zéro ne sera pas pris en compte pour les 9 premiers départements (03500) !!
+
 7. Dans Entity/User.php rajouter à la ligne $createdAt :
 ```
 #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
