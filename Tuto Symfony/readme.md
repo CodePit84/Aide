@@ -10,16 +10,17 @@
 
 5. ```symfony console make:user```
 
-6. ```symfony console make:entity User```
-Ensuite ajouter des champs à l'entité comme par exemple :
-lastName, firstName, address, zipcode, city, phone, createdAt
-
 À noter que :
+
 #[ORM\Id] veut dire que c'est une clé primaire.
 
 #[ORM\GeneratedValue] veut dire que c'est auto-incrémenté.
 
 Le champs Id étant automatiquement généré par Symfony !
+
+6. ```symfony console make:entity User```
+Ensuite ajouter des champs à l'entité comme par exemple :
+lastName, firstName, address, zipcode, city, phone, createdAt
 
 7. Dans Entity/User.php rajouter à la ligne $createdAt :
 ```
