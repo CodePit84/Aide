@@ -149,7 +149,37 @@ class UserController extends AbstractController
     }        
 }
 ```
-4. Pour l'edition (modification) du mot de passe :
+4. Nous devons créer le rendu du formulaire : edit_user.html.twig
+```
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil utilisateur{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Modification du profil utilisateur</h1>
+
+            {{ form_start(editUserForm) }}
+                <fieldset class="mb-3">
+                    <legend>Mon identité</legend>
+                    {{ form_row(editUserForm.nickname) }}
+                    {{ form_row(editUserForm.email) }}
+                </fieldset>
+                    {{ form_row(editUserForm.plainPassword) }}
+
+                <button type="submit" class="btn btn-primary btn-lg my-3">Sauvegarder</button>
+                <a href="{{ path('app_edit_password_user', {id: app.user.id}) }}" class="btn btn-warning">Modifier le mot de passe</a>           
+            {{ form_end(editUserForm) }} 
+        </div>
+    </div>
+</section>
+{% endblock %}
+``` 
+
+
+5. Pour l'edition (modification) du mot de passe :
 On rajoute la nouvelle méthode (editPassword) dans le UserController.php
 (pour plus de lisibilité je met ci-dessous la totalité du fichier UserController.php
 ```
@@ -279,7 +309,7 @@ class UserController extends AbstractController
 
 }
 ```
-5. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordType.php
+6. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordType.php
 ```
 <?php
 
@@ -340,7 +370,7 @@ class UserPasswordType extends AbstractType
     }
 }
 ```
-6. Puis nous devons créer le rendu de ce formulaire : edit_password.html.twig
+7. Puis nous devons créer le rendu de ce formulaire : edit_password.html.twig
 ```
 {% extends 'base.html.twig' %}
 
