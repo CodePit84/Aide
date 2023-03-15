@@ -25,7 +25,7 @@ Pour ensuite ajouter des propriétés (ainsi que leurs get / set) à l'entité c
 lastName, firstName, address, zipcode, city, phone, createdAt
 
 "createdAt" sera du type datetime_immutable.
-A noter que si propriété "zipcode" (code postale) choisir "string" de "5" caractères, sinon le premier zéro ne sera pas pris en compte pour les 9 premiers départements (ex : 03500) !!
+A noter que si propriété "zipcode" (code postale) choisir "string" de "5" caractères, sinon le premier zéro ne sera pas pris en compte pour les 9 premiers départements (ex : 03500) !! Pareil pour le numéro de téléphone ! ;)
 
 7. Dans Entity/User.php rajouter à la ligne $createdAt :
 ```
