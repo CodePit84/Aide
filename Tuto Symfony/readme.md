@@ -16,6 +16,7 @@ lastName, firstName, address, zipcode, city, phone, createdAt
 
 À noter que :
 #[ORM\Id] veut dire que c'est une clé primaire.
+
 #[ORM\GeneratedValue] veut dire que c'est auto-incrémenté.
 
 Le champs Id étant automatiquement généré par Symfony !
