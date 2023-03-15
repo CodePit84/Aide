@@ -1,3 +1,5 @@
+# Mise en place de l'edition d'un utilisateur et de la modification de son mot de passe (sur une autre page) :
+
 1. Rajouter dans l'Entity User.php :
 ``` private ?string $plainPassword = null; ```
 et les get / set :
