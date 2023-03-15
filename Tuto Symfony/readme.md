@@ -19,7 +19,8 @@
 Le champs Id étant automatiquement généré par Symfony !
 
 6. ```symfony console make:entity User```
-Ensuite ajouter des champs à l'entité comme par exemple :
+Ensuite ajouter des propriétés (ainsi que leurs get / set) à l'entité comme par exemple :
+
 lastName, firstName, address, zipcode, city, phone, createdAt
 
 7. Dans Entity/User.php rajouter à la ligne $createdAt :
