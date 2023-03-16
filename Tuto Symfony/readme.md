@@ -200,6 +200,7 @@ et de notre templates/partials/_flash.html.twig:
 ``` 
 
 10. Nous allons créer un système d'authentification avec la commande :
+
 [Chap.5 / Symfony6 / Nouvelle Techno]
 ```
 symfony console make:auth
