@@ -204,7 +204,10 @@ symfony console make:migration
 ```
 symfony console doctrine:migrations:migrate
 ```
-ou ``` symfony console d:m:m 
+ou 
+```
+symfony console d:m:m
+```
 
 12. On va Créer un HomeController.php pour l'affichage de notre première page :
 ```
