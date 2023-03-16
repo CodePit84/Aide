@@ -1,6 +1,7 @@
 ## Tuto Symfony
 
-1. ```cd Workspace```
+1. Aller dans le dossier où le projet sera créé :
+```cd Workspace```
 
 2. ```symfony new --webapp nomduprojet```
 
@@ -32,6 +33,7 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
 #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $createdAt = null;
 ```
+[Chap.3 / 11:59 / Symfony6 / Nouvelle Techno]
 
 :warning: On rajoutera plus tard dans le Constructeur de l'Entity : User.php (étape 19), la ligne : 
 ```
