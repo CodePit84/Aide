@@ -478,8 +478,148 @@ et valider tout, sauf la vérification par email :
  Do you want to automatically authenticate the user after registration? (yes/no) [yes]:
  > 
 ```
-18. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants dans son builder, par exemple :
+18. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants du formulaire dans son builder, par exemple :
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+->add('name')
+```
 
 Vous pouvez aussi changer le agreeTerms, par un RGPDcontent...
+
+19. Editer le rendu templates/registration/register.html.twig comme ça par exemple :
+```
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Inscription</h1>
+
+            {{ form_start(registrationForm) }}
+                <fieldset class="mb-3">
+                    <legend>Mon identité</legend>
+                    {{ form_row(registrationForm.name) }}
+                    {{ form_row(registrationForm.email) }}
+                </fieldset>
+
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Mot de passe'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <button type="submit" class="btn btn-primary btn-lg my-3">M'inscrire</button>
+                <a href="{{ path('app_login') }}" class="btn btn-secondary">Me connecter</a>
+            {{ form_end(registrationForm) }}        
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+```
+20. Vous pouvez ajouter les classes Bootstrap au niveau du twig ou au niveau du formulaire (RegistrationFormType.php) :
+ci dessous l'ajout de class Bootstrap, les imports des class type de symfony et la mise en place de la confirmation du mot de passe :
+
+```
+<?php
+
+namespace App\Form;
+
+use App\Entity\User;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
+class RegistrationFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'E-mail'    
+            ])
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3'
+                ],
+                'label' => 'Nom'    
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-check-input mx-1'
+                ],
+                'label' => 'J\'accepte l\'usage de mes coordonnées pour l\'utilisation de l\'application. Nous ne partagerons jamais données.'
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label'    
+                    ]
+                ],
+                'second_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Confirmation du mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-3'    
+                    ]
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'mapped' => false,
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+                'label' => 'Mot de passe'
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
+    }
+}
+
+```
+
