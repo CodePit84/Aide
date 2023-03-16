@@ -297,3 +297,21 @@ Pour obtenir
 
 ```
 J'ai commenté la ligne du lien de l'inscription car la route n'existe pas encore ainsi que le formulaire qui va avec...
+
+13. Il faut désormais créer le formulaire d'inscription :
+```
+symfony console make:registration-form
+```
+et valider tout, sauf la vérification par email :
+``` 
+ Creating a registration form for App\Entity\User
+
+ Do you want to add a @UniqueEntity validation annotation on your User class to make sure duplicate accounts aren't created? (yes/no) [yes]:
+ > 
+
+ Do you want to send an email to verify the user's email address after registration? (yes/no) [yes]:
+ > no
+
+ Do you want to automatically authenticate the user after registration? (yes/no) [yes]:
+ > 
+```
