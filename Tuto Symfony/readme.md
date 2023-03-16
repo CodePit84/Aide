@@ -239,7 +239,7 @@ et répondez 1. et lui donner le nom de UsersAuthenticator
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 ```
-12. Pour plus de gueule avec Bootstrap, dans le bloque Body, insérer une section et un container dans templates/security/login.html.twig
+12. Pour plus de gueule avec Bootstrap, dans le bloc Body, insérer une section et un container dans templates/security/login.html.twig
 
 en emmet faire : ```section.container>div.row>div.col``` et mettre le formulaire dedans.
 Pour obtenir
@@ -315,3 +315,8 @@ et valider tout, sauf la vérification par email :
  Do you want to automatically authenticate the user after registration? (yes/no) [yes]:
  > 
 ```
+14. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants dans son builder, par exemple :
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Vous pouvez aussi changer le agreeTerms, par un RGPDcontent...
