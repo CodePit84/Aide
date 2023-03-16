@@ -11,9 +11,11 @@ Ne pas laisser APP_SECRET et DATABASE_URL dans le .env et le mettre dans le .env
 
 4. ```symfony console doctrine:database:create``` ou d:d:c
 
+Répondez Entrée à chaque question.
+
 5. ```symfony console make:user```
 
-À noter que :
+À noter que dans src/Entity/User.php :
 
 #[ORM\Id] veut dire que c'est une clé primaire.
 
