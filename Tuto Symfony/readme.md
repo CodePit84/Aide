@@ -39,7 +39,7 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
 ```
 [Chap.3 / 11:59 / Symfony6 / Nouvelle Techno]
 
-:warning: On rajoutera aussi dans le Constructeur de l'Entity : User.php (pour que la date soit automatiquement importer dans la bdd lors de l'enregistrement d'un nouvel utilisateur), le rajouter avant les get /set : 
+:warning: On rajoutera aussi dans le Constructeur de l'Entity : User.php (pour que la date soit automatiquement importée dans la bdd lors de l'enregistrement d'un nouvel utilisateur), le rajouter avant les get /set : 
 ```
     public function __construct()
     {
@@ -631,4 +631,25 @@ class RegistrationFormType extends AbstractType
 }
 
 ```
+21. On peut dès lors modifier le template _header.html.twig et décommenter les quelques lignes qui nous empêchait jusqu'alors de rendre l'affichage :
+```
+<ul class="navbar-nav ms-auto">
+      {% if app.user %}
+        <li class="nav-item">
+          {# <a class="nav-link" href="{{ path('app_edit_user', {id: app.user.id}) }}">Mon profil</a> #}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout') }}">Me déconnecter</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_register') }}">M'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Me Connecter</a>
+        </li>      
+      {% endif %}
+      </ul>
+```  
 
+Voilà c'est fini pour cette première partie !
