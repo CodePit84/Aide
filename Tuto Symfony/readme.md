@@ -46,7 +46,167 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
         $this->createdAt = new \DateTimeImmutable();
     }
 ````  
-8. On va Créer un HomeController.php pour l'affichage de notre première page :
+8. On va créer nos Entités, ici 1 seule (Movement) mais vous pouvez créer vos tables maintenant :
+```
+symfony console make:entity
+```
+Puis remplisser les champs de l'entité :
+```
+ Class name of the entity to create or update (e.g. GentleChef):
+ > Movement
+
+ created: src/Entity/Movement.php
+ created: src/Repository/MovementRepository.php
+ 
+ Entity generated! Now let's add some fields!
+ You can always add more fields later manually or by re-running this command.
+
+ New property name (press <return> to stop adding fields):
+ > amount
+
+ Field type (enter ? to see all types) [string]:
+ > integer
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ > 
+
+ updated: src/Entity/Movement.php
+
+ Add another property? Enter the property name (or press <return> to stop adding fields):
+ > place
+
+ Field type (enter ? to see all types) [string]:
+ > 
+
+ Field length [255]:
+ > 80
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ > yes
+
+ updated: src/Entity/Movement.php
+
+ Add another property? Enter the property name (or press <return> to stop adding fields):
+ > date
+
+ Field type (enter ? to see all types) [string]:
+ > ?
+
+Main Types
+  * string
+  * text
+  * boolean
+  * integer (or smallint, bigint)
+  * float
+
+Relationships/Associations
+  * relation (a wizard 🧙 will help you build the relation)
+  * ManyToOne
+  * OneToMany
+  * ManyToMany
+  * OneToOne
+
+Array/Object Types
+  * array (or simple_array)
+  * json
+  * object
+  * binary
+  * blob
+
+Date/Time Types
+  * datetime (or datetime_immutable)
+  * datetimetz (or datetimetz_immutable)
+  * date (or date_immutable)
+  * time (or time_immutable)
+  * dateinterval
+
+Other Types
+  * ascii_string
+  * decimal
+  * guid
+
+
+ Field type (enter ? to see all types) [string]:
+ > date_immutable
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ > 
+
+ updated: src/Entity/Movement.php
+
+ Add another property? Enter the property name (or press <return> to stop adding fields):
+ > user
+
+ Field type (enter ? to see all types) [string]:
+ > relation
+
+ What class should this entity be related to?:
+ > User
+
+What type of relationship is this?
+ ------------ --------------------------------------------------------------------- 
+  Type         Description                                                          
+ ------------ --------------------------------------------------------------------- 
+  ManyToOne    Each Movement relates to (has) one User.                             
+               Each User can relate to (can have) many Movement objects.            
+                                                                                    
+  OneToMany    Each Movement can relate to (can have) many User objects.            
+               Each User relates to (has) one Movement.                             
+                                                                                    
+  ManyToMany   Each Movement can relate to (can have) many User objects.            
+               Each User can also relate to (can also have) many Movement objects.  
+                                                                                    
+  OneToOne     Each Movement relates to (has) exactly one User.                     
+               Each User also relates to (has) exactly one Movement.                
+ ------------ --------------------------------------------------------------------- 
+
+ Relation type? [ManyToOne, OneToMany, ManyToMany, OneToOne]:
+ > ManyToOne
+
+ Is the Movement.user property allowed to be null (nullable)? (yes/no) [yes]:
+ > no
+
+ Do you want to add a new property to User so that you can access/update Movement objects from it - e.g. $user->getMovements()? (yes/no) [yes]:
+ > 
+
+ A new property will also be added to the User class so that you can access the related Movement objects from it.
+
+ New field name inside User [movements]:
+ > 
+
+ Do you want to activate orphanRemoval on your relationship?
+ A Movement is "orphaned" when it is removed from its related User.
+ e.g. $user->removeMovement($movement)
+ 
+ NOTE: If a Movement may *change* from one User to another, answer "no".
+
+ Do you want to automatically delete orphaned App\Entity\Movement objects (orphanRemoval)? (yes/no) [no]:
+ > yes
+
+ updated: src/Entity/Movement.php
+ updated: src/Entity/User.php
+
+ Add another property? Enter the property name (or press <return> to stop adding fields):
+ > 
+
+
+           
+  Success! 
+           
+
+ Next: When you're ready, create a migration with php bin/console make:migration
+``` 
+10. On va préparer la migration avec la commande :
+```
+symfony console make:migration
+```
+11. On va procéder à la migration avec la commande :
+```
+symfony console doctrine:migrations: migrate
+```
+d:m:m
+
+12. On va Créer un HomeController.php pour l'affichage de notre première page :
 ```
 symfony console make:controller Home
 ```
@@ -63,7 +223,7 @@ class HomeController extends AbstractController
     }
 }
 ```
-9. Dans templates/base.html.twig rajouter les balises Meta de votre thème Bootstrap ou Bootswatch, et vos scripts js, par exemple :
+13. Dans templates/base.html.twig rajouter les balises Meta de votre thème Bootstrap ou Bootswatch, et vos scripts js, par exemple :
 
 ```
 <!DOCTYPE html>
@@ -201,7 +361,7 @@ et de notre templates/partials/_flash.html.twig:
 {% endfor %}
 ``` 
 
-10. Nous allons créer un système d'authentification avec la commande :
+14. Nous allons créer un système d'authentification avec la commande :
 
 [Chap.5 / Symfony6 / Nouvelle Techno]
 ```
@@ -224,7 +384,7 @@ et répondez 1. et lui donner le nom de UsersAuthenticator
  Do you want to generate a '/logout' URL? (yes/no) [yes]:
  > 
 ``` 
-11. Dans src/Security/UsersAuthenticator.php :
+15. Dans src/Security/UsersAuthenticator.php :
 - commenter throw new \Exception
 - et décommenter return new RedirectResponse  et lui mettre la Route désirée pour la redirection en cas d'authentification réussie (ici : home).
 ```
@@ -239,7 +399,7 @@ et répondez 1. et lui donner le nom de UsersAuthenticator
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 ```
-12. Pour plus de gueule avec Bootstrap, dans le bloc Body, insérer une section et un container dans templates/security/login.html.twig
+16. Pour plus de gueule avec Bootstrap, dans le bloc Body, insérer une section et un container dans templates/security/login.html.twig
 
 en emmet faire : ```section.container>div.row>div.col``` et mettre le formulaire dedans.
 Pour obtenir
@@ -298,7 +458,7 @@ Pour obtenir
 ```
 J'ai commenté la ligne du lien de l'inscription car la route n'existe pas encore ainsi que le formulaire qui va avec...
 
-13. Il faut désormais créer le formulaire d'inscription :
+17. Il faut désormais créer le formulaire d'inscription :
 ```
 symfony console make:registration-form
 ```
@@ -315,7 +475,7 @@ et valider tout, sauf la vérification par email :
  Do you want to automatically authenticate the user after registration? (yes/no) [yes]:
  > 
 ```
-14. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants dans son builder, par exemple :
+18. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants dans son builder, par exemple :
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
