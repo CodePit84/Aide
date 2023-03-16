@@ -203,4 +203,35 @@ et de notre templates/partials/_flash.html.twig:
 ```
 symfony console make:auth
 ```
- 
+et répondez 1. et lui donner le nom de UsersAuthenticator
+```
+
+ What style of authentication do you want? [Empty authenticator]:
+  [0] Empty authenticator
+  [1] Login form authenticator
+ > 1
+
+ The class name of the authenticator to create (e.g. AppCustomAuthenticator):
+ > UsersAuthenticator
+
+ Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
+ > 
+
+ Do you want to generate a '/logout' URL? (yes/no) [yes]:
+ > 
+``` 
+11. Dans src/Security/UsersAuthenticator.php :
+- commenter throw new \Exception
+- et décommenter return new RedirectResponse  et lui mettre la Route désirée pour la redirection en cas d'authentification réussie (ici : home).
+```
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        // For example:
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+    }
+```
