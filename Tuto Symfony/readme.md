@@ -202,9 +202,9 @@ symfony console make:migration
 ```
 11. On va procéder à la migration avec la commande :
 ```
-symfony console doctrine:migrations: migrate
+symfony console doctrine:migrations:migrate
 ```
-d:m:m
+ou ```symfony console d:m:m
 
 12. On va Créer un HomeController.php pour l'affichage de notre première page :
 ```
