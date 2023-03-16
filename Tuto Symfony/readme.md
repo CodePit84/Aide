@@ -39,7 +39,7 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
 ```
 [Chap.3 / 11:59 / Symfony6 / Nouvelle Techno]
 
-:warning: On rajoutera plus tard dans le Constructeur de l'Entity : User.php (étape 19), ou le rajouter maintenant avant les get /set : 
+:warning: On rajoutera aussi dans le Constructeur de l'Entity : User.php (pour que la date soit automatiquement importer dans la bdd lors de l'enregistrement d'un nouvel utilisateur), le rajouter avant les get /set : 
 ```
     public function __construct()
     {
