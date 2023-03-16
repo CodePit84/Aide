@@ -103,23 +103,10 @@ class HomeController extends AbstractController
             {% include "partials/_header.html.twig" %}
         {% endblock %}
 
-
-        {# Si l'utilisateur est connecté : (if app.user) #}
-        {# {% if app.user and app.user.isVerified == false %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <div class="alert-message">
-                    <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
-                </div>
-            </div>
-        {% endif %} #}
-
         
         {% include "partials/_flash.html.twig" %}
+        
         {% block body %} 
-        
-        
-        
 
         {% endblock %}
 
@@ -134,3 +121,86 @@ Veuillez noté le rajout aussi de la balise ViewPort :
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ``` 
 Tout est préférable de le rajouter avant les blocs ou en dehors.
+Nous en avons profité aussi pour rajouter des includes, qui nous appelerons nos header, footer, et message flash sur toutes les pages ! ;)
+
+exemple de notre templates/partials/_header.html.twig:
+```
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">SymBetcheck</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        {% if app.user %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_movement_user', {id: app.user.id}) }}">Consulter</a>
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajouter </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ path('app_movement_addDeposit_user', {id: app.user.id}) }}">Une dépense</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('app_movement_addWithdraw_user', {id: app.user.id}) }}">Un encaissement</a>
+          </div>
+        </li>
+        {% endif %}
+        {# <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li> #}
+      </ul>
+      <ul class="navbar-nav ms-auto">
+      {% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_edit_user', {id: app.user.id}) }}">Mon profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout') }}">Me déconnecter</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_register') }}">M'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Me Connecter</a>
+        </li>      
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+de notre templates/partials/_footer.html.twig:
+```
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2023 Copyright:
+        <a class="text-reset fw-bold" href="https://github.com/CodePit84">CodePit84</a>
+    </div>
+</footer>
+```
+et de notre templates/partials/_flash.html.twig:
+```
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="alert-message">
+                {{ message|raw }}
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
+``` 
+
+10. Nous allons créer un système d'authentification avec la commande :
+```
+symfony console make:auth
+```
+ 
