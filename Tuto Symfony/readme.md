@@ -549,13 +549,19 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'E-mail'    
+                'label' => 'E-mail',
+                'label_attr' => [
+                    'class' => 'form-label'    
+                ]    
             ])
             ->add('name', TextType::class, [
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'label' => 'Nom'    
+                'label' => 'Nom',
+                'label_attr' => [
+                    'class' => 'form-label'    
+                ]   
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -565,9 +571,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'attr' => [
-                    'class' => 'form-check-input mx-1'
+                    'class' => 'form-check-input mx-1 mt-3'
                 ],
-                'label' => 'J\'accepte l\'usage de mes coordonnées pour l\'utilisation de l\'application. Nous ne partagerons jamais données.'
+                'label' => 'J\'accepte l\'usage de mes coordonnées pour l\'utilisation de l\'application. Nous ne partagerons jamais données.',
+                'label_attr' => [
+                    'class' => 'form-label mt-3'    
+                ]
             ])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
