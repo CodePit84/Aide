@@ -62,7 +62,7 @@ class HomeController extends AbstractController
         ]);
     }
 }
-
+```
 9. Dans templates/base.html.twig rajouter les balises Meta de votre thème Bootstrap ou Bootswatch, et vos scripts js, par exemple :
 
 ```
