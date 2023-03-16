@@ -7,6 +7,8 @@
 
 3. Créer un .env.local et modifier .env
 
+Ne pas laisser APP_SECRET et DATABASE_URL dans le .env et le mettre dans le .env.local
+
 4. ```symfony console doctrine:database:create``` ou d:d:c
 
 5. ```symfony console make:user```
