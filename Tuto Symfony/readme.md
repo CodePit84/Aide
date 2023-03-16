@@ -176,7 +176,9 @@ exemple de notre templates/partials/_header.html.twig:
   </div>
 </nav>
 ```
-de notre templates/partials/_footer.html.twig:
+:warning: Attention les routes des liens pourront afficher des erreurs car ici les routes n'existent pas encore à cette étape ou ne sont pas les bonnes !
+
+Notre templates/partials/_footer.html.twig:
 ```
 <footer class="text-center text-lg-start bg-light text-muted">
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
