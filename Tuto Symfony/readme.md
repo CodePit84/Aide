@@ -70,29 +70,67 @@ class HomeController extends AbstractController
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Le-Collectif{% endblock %}</title>
+        <title>{% block title %}SymBetcheck{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/zephyr/bootstrap.min.css" integrity="sha512-dcTg+pv6j02FTyko5ua8nsnARs/l4u43vmnbeVgkFWB5wdLgfUq4CEotFWOlTE4XK7FfVriWj7BrpqET/a+SJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-            <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Appel de la Feuille de style minifiée De La librairie Bootswatch -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/zephyr/bootstrap.min.css" integrity="sha512-dcTg+pv6j02FTyko5ua8nsnARs/l4u43vmnbeVgkFWB5wdLgfUq4CEotFWOlTE4XK7FfVriWj7BrpqET/a+SJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Noyau JavaScript de Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous" defer></script>
+        <!-- Appel de la Feuille de style minifiée De l'extension Datepicker -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+        <!-- Extension jquery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- Extension DATEPICKER -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <!-- Appel de la Feuille de style pour la police -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Mon script JavaScript de Datepicker -->
+        <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+        
+        {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous" defer></script>
-            <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
         {% endblock %}
+
     </head>
     <body>
         {% block header %}
-        {% include "partials/_header.html.twig" %}
-        
+            {% include "partials/_header.html.twig" %}
         {% endblock %}
-        {% block body %}{% endblock %}
-        {% include "partials/_footer.html.twig" %}
+
+
+        {# Si l'utilisateur est connecté : (if app.user) #}
+        {# {% if app.user and app.user.isVerified == false %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message">
+                    <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+                </div>
+            </div>
+        {% endif %} #}
+
+        
+        {% include "partials/_flash.html.twig" %}
+        {% block body %} 
+        
+        
+        
+
+        {% endblock %}
+
+        {% block footer %}
+            {% include "partials/_footer.html.twig" %}
+        {% endblock %}
     </body>
 </html>
 ```
+Veuillez noté le rajout aussi de la balise ViewPort :
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+``` 
+Tout est préférable de le rajouter avant les blocs ou en dehors.
