@@ -9,12 +9,16 @@ composer require --dev orm-fixtures
 ``` 
 composer require fakerphp/faker
 ```
+
+Vous pouvez effacer le fichier src/DataFixtures/AppFixtures.php
+
 3. On va créer des utilisateurs projet) :
 
 ``` 
 symfony console make:fixtures UserFixtures
 ```
 
+Dans le fichier src/DataFixtures/UserFixtures.php
 
 
 
