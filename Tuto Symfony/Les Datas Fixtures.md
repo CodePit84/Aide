@@ -9,5 +9,34 @@ composer require --dev orm-fixtures
 ``` 
 composer require fakerphp/faker
 ```
+3. On va créer des utilisateurs projet) :
 
-3. On va créer des utilisateurs
+``` 
+symfony console make:fixtures UserFixtures
+```
+
+
+
+
+99. On va créer des mouvements (pour rester dans la suite de notre projet) :
+
+``` 
+symfony console make:fixtures MovementFixtures
+```
+
+
+
+
+
+``` 
+symfony console doctrine:fixtures:load
+```
+ou
+``` 
+symfony console d:f:l
+```
+
+31:10 Nouvelle techno
+#[ORM\JoinColumn(onDelete: 'CASCADE')]
+symfony console make:migration
+symfony console doctrine:migrations:migrate
