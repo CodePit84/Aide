@@ -37,6 +37,9 @@ Symfony commande :
 ```php bin/console make:controller SecurityController```
 ==> créer un controller sécurité
 
+```symfony console doctrine:schema:update --force```
+==> force à mettre à jour le schéma de la base de donnée (peut-être faudra t-il effacer la base de données avant...
+
 
 
 ---------
