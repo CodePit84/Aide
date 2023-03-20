@@ -132,7 +132,7 @@ symfony console make:fixtures MovementFixtures
 
 On va avoir 2 problèmes :
 - Le Premier c'est qu'il faut lié un mouvement à un utilisateur !
-- Le Second c'est l'ordre dans lequel sont executer le chargement des Datasfixtures (par ordre Alphabétique...) Il faut que le chargement de UserFixtures soit exécuter avant MovementFixtures... 
+- Le Second c'est l'ordre dans lequel sont executer le chargement des DataFixtures (par ordre Alphabétique...) Il faut que le chargement de UserFixtures soit exécuter avant MovementFixtures... 
 
 Dans App\DataFixtures\MovementFixtures.php on va mettre :
 ```
@@ -244,7 +244,7 @@ class UserFixtures extends Fixture
 
 ```
 - On va chercher la référence que l'on vient de créer avec le compteur dans la class User avant le persist. 
-- Et on va implémenter DependentFixtureInterface à la class, pour changer l'ordre de chargement des DatasFixtures. et crée la méthode obligatoire getDependencies que cet implementation requert.
+- Et on va implémenter DependentFixtureInterface à la class, pour changer l'ordre de chargement des DatasFixtures. et crée la méthode obligatoire getDependencies que cet implementation requert. Comme on a créer 5 utilisateurs, on lui dira de prendre un "user-" entre 1 et 5 avec le rand(random).
 
 ``` 
 <?php
@@ -262,10 +262,6 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        // $this->createMov(50, $manager);
-        // $this->createMov(60, $manager);
-        // $this->createMov(100, $manager);
-
         $faker = Factory::create('fr_FR');
 
         for ($i=1; $i <=25 ; $i++) { 
@@ -274,7 +270,7 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
             $mov->setPlace($faker->optional->name);
             $mov->setDate(new \DateTimeImmutable());
 
-            // On va chercher une référence de user
+            // On va chercher une référence de user (ici entre 1 et 5)
             $user = $this->getReference('user-'. rand(1, 5));
             $mov->setUser($user);
             
@@ -282,8 +278,6 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-
-        // $manager->flush();
     }
     
     public function createMov(string $amount, ObjectManager $manager)
@@ -308,6 +302,20 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
     }
 }
 ```
+On peur alors charger les fixtures sans problème :
+``` 
+symfony console doctrine:fixtures:load --no-interaction
+
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\UserFixtures
+   > loading App\DataFixtures\MovementFixtures
+```
+UserFixtures est bien exécuter avant MovementFixtures ! :)
+
+
+
+
 
 
 
