@@ -267,10 +267,11 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
         for ($i=1; $i <=25 ; $i++) { 
             $mov = new Movement();
             $mov->setAmount($faker->numberBetween(1000, 150000));
-            $mov->setPlace($faker->optional->name);
+            // $mov->setPlace($faker->optional->name);
+            $mov->setPlace($faker->optional->randomElement(['Winamax', 'Betclic', 'FDJ']));
             $mov->setDate(new \DateTimeImmutable());
 
-            // On va chercher une référence de user (ici entre 1 et 5)
+            // On va chercher une référence de user
             $user = $this->getReference('user-'. rand(1, 5));
             $mov->setUser($user);
             
@@ -278,19 +279,22 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    }
-    
-    public function createMov(string $amount, ObjectManager $manager)
-    {
-        $mov = new Movement;
-        $mov->setAmount($amount);
-        $mov->setPlace('Winamax');
-        $mov->setDate(new \DateTimeImmutable());
-    
-        $manager->persist($mov);
 
-        return $mov;
+        // $manager->flush();
     }
+    
+    // public function createMov(string $amount, ObjectManager $manager)
+    // {
+    //     $mov = new Movement;
+    //     $mov->setAmount($amount);
+    //     $mov->setPlace('Winamax');
+    //     $mov->setDate(new \DateTimeImmutable());
+    
+    //     $manager->persist($mov);
+
+    //     return $mov;
+    // }
+
 
     // On créer un nouvelle méthode dû au rajout de "implements DependentFixtureInterface" dans "class MovementFixtures extends Fixture"
     // Pour dire que UserFixtures doit être executer avant MovementFixtures (car c'est exécuter de manière alphabétique)
