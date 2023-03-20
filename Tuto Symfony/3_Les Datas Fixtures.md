@@ -326,10 +326,35 @@ UserFixtures est bien exécuter avant MovementFixtures ! :)
 
 _________________________________________________________________________________________
 
-* *Note :
+* *Note :*
 Si problème au niveau de l'effacement des données, lors du chargement des fixtures voir :
 
 6 - Optimisation des entités et DataFixtures (Symfony 6) / 31:10 / Nouvelle Techno (https://youtu.be/JVVeBiewhNg)
 #[ORM\JoinColumn(onDelete: 'CASCADE')]
+
+_________________________________________________________________________________________
+
+* *Note 2:*
+Rappel pour créer le bdd : 
 symfony console make:migration
 symfony console doctrine:migrations:migrate
+_________________________________________________________________________________________
+
+* *Note 3 :*
+Pour repartir de zéro après plusieurs essais les id dans la bdd sont décaler (autoincrémente oblige + effacement si plusieurs essais... ainsi notre premier utilisateur pourra avoir un id de 16 par exemple). Donnc effaçons tout et chargement 1 fois nos DataFixturs :
+``` 
+php bin/console d:d:d --force
+```
+=> On efface la bdd
+``` 
+symfony console d:d:c
+```
+=> On recrée la bdd
+``` 
+symfony console doctrine:schema:update --force
+```
+=> On met à jour la bdd
+``` 
+symfony console doctrine:fixtures:load --no-interaction
+```
+=> Et on charge les Fixtures
