@@ -324,9 +324,9 @@ UserFixtures est bien exécuter avant MovementFixtures ! :)
 
 
 
+_________________________________________________________________________________________
 
-
-** Note :
+* *Note :
 Si problème au niveau de l'effacement des données, lors du chargement des fixtures voir :
 
 6 - Optimisation des entités et DataFixtures (Symfony 6) / 31:10 / Nouvelle Techno
