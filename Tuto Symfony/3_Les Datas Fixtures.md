@@ -330,14 +330,21 @@ ________________________________________________________________________________
 Si problème au niveau de l'effacement des données, lors du chargement des fixtures voir :
 
 6 - Optimisation des entités et DataFixtures (Symfony 6) / 31:10 / Nouvelle Techno (https://youtu.be/JVVeBiewhNg)
+
+``` 
 #[ORM\JoinColumn(onDelete: 'CASCADE')]
+```
 
 _________________________________________________________________________________________
 
-* *Note 2:*
-Rappel pour créer le bdd : 
+* *Note 2 :*
+Rappel pour créer la bdd : 
+``` 
 symfony console make:migration
+```
+``` 
 symfony console doctrine:migrations:migrate
+```
 _________________________________________________________________________________________
 
 * *Note 3 :*
