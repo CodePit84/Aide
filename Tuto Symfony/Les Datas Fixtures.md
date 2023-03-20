@@ -58,6 +58,10 @@ Executer dans la console pourcharger les fixtures dans la bdd :
 ``` 
 symfony console doctrine:fixtures:load
 ``` 
+ou
+``` 
+symfony console d:f:l
+```
 
 A partir de là on a créer un utilisateur mais 
 
@@ -322,16 +326,10 @@ UserFixtures est bien exécuter avant MovementFixtures ! :)
 
 
 
+** Note :
+Si problème au niveau de l'effacement des données, lors du chargement des fixtures voir :
 
-``` 
-symfony console doctrine:fixtures:load
-```
-ou
-``` 
-symfony console d:f:l
-```
-
-31:10 Nouvelle techno
+6 - Optimisation des entités et DataFixtures (Symfony 6) / 31:10 / Nouvelle Techno
 #[ORM\JoinColumn(onDelete: 'CASCADE')]
 symfony console make:migration
 symfony console doctrine:migrations:migrate
