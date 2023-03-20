@@ -1,9 +1,9 @@
-#1. On commence par créer le controller des Mouvements
+# 1. On commence par créer le controller des Mouvements
 ```
 symfony console make:controller MovementController
 ```
 
-#2. On va editer notre controller : src/Controller/MovementController.php
+# 2. On va editer notre controller : src/Controller/MovementController.php
 ```
 <?php
 
@@ -30,7 +30,7 @@ class MovementController extends AbstractController
 ```
 Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs...
 
-#3. On va éditer notre templates/movement/index.html.twig, pour avoir le rendu dans un tableau :
+# 3. On va éditer notre templates/movement/index.html.twig, pour avoir le rendu dans un tableau :
 ```
 {% extends 'base.html.twig' %}
 
@@ -92,4 +92,4 @@ Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs.
 
 ```
 
-#4. Il va falloir changer la requête de notre controller pour n'afficher que les mouvements de notre utilisateur !
+# 4. Il va falloir changer la requête de notre controller pour n'afficher que les mouvements de notre utilisateur !
