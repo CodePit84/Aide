@@ -124,17 +124,190 @@ symfony console doctrine:fixtures:load --no-interaction
 On a désomais 1 Admin et 5 utlisateurs générés.
 
 
-
-
-
-
-99. On va créer des mouvements (pour rester dans la suite de notre projet) :
+4. On va créer des mouvements (pour rester dans la suite de notre projet) :
 
 ``` 
 symfony console make:fixtures MovementFixtures
 ```
 
+On va avoir 2 problèmes :
+- Le Premier c'est qu'il faut lié un mouvement à un utilisateur !
+- Le Second c'est l'ordre dans lequel sont executer le chargement des Datasfixtures (par ordre Alphabétique...) Il faut que le chargement de UserFixtures soit exécuter avant MovementFixtures... 
 
+Dans App\DataFixtures\MovementFixtures.php on va mettre :
+```
+<?php
+
+namespace App\DataFixtures;
+
+use Faker;
+use Faker\Factory;
+use App\Entity\Movement;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+
+class MovementFixtures extends Fixture
+{
+    public function load(ObjectManager $manager): void
+    {
+        $faker = Factory::create('fr_FR');
+
+        for ($i=1; $i <=25 ; $i++) { 
+            $mov = new Movement();
+            $mov->setAmount($faker->numberBetween(1000, 150000));
+            $mov->setPlace($faker->optional->name);
+            $mov->setDate(new \DateTimeImmutable());
+
+            // On va chercher une référence de user
+            $user = $this->getReference('user-'. rand(1, 5));
+            $mov->setUser($user);
+            
+            $manager->persist($mov);
+        }
+
+        $manager->flush();
+
+        // $manager->flush();
+    }
+    
+    public function createMov(string $amount, ObjectManager $manager)
+    {
+        $mov = new Movement;
+        $mov->setAmount($amount);
+        $mov->setPlace('Winamax');
+        $mov->setDate(new \DateTimeImmutable());
+    
+        $manager->persist($mov);
+
+        return $mov;
+    }
+}
+```
+
+On va rajouter dans App\DataFixtures\UserFixtures.php un compteur :
+``` 
+<?php
+
+namespace App\DataFixtures;
+
+use App\Entity\User;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Faker;
+
+class UserFixtures extends Fixture
+{
+    // On crée un compteur pour compter les users pour les fixtures des Movement
+    private $counter = 1;
+    
+    public function __construct(private UserPasswordHasherInterface $passwordEncoder)
+    {
+        
+    }
+    
+    public function load(ObjectManager $manager): void
+    {
+        // On crée 1 seul Admin
+        $admin = new User();
+        $admin->setEmail('admin@tuto.fr');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword(
+            $this->passwordEncoder->hashPassword($admin, 'secret'));
+        $admin->setName('Toto');
+        
+        $manager->persist($admin);
+
+        //////////////////////////////////////
+
+        // On crée 5 Users
+        $faker = Faker\Factory::create('fr_FR');
+
+        for ($i=1; $i <=5 ; $i++) { 
+            $user = new User();
+            $user->setEmail($faker->email());
+            $user->setRoles(['ROLE_USER']);
+            $user->setPassword(
+                $this->passwordEncoder->hashPassword($user, 'secret'));
+            $user->setName($faker->name());
+            
+            $manager->persist($user);
+
+            // Pour les data fixtures de Movement (MovementFixtures.php)
+            $this->addReference('user-'.$this->counter, $user);
+            $this->counter++;
+        }
+
+        $manager->flush();
+    }
+}
+
+```
+- On va chercher la référence que l'on vient de créer avec le compteur dans la class User avant le persist. 
+- Et on va implémenter DependentFixtureInterface à la class, pour changer l'ordre de chargement des DatasFixtures. et crée la méthode obligatoire getDependencies que cet implementation requert.
+
+``` 
+<?php
+
+namespace App\DataFixtures;
+
+use Faker;
+use Faker\Factory;
+use App\Entity\Movement;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+
+class MovementFixtures extends Fixture implements DependentFixtureInterface
+{
+    public function load(ObjectManager $manager): void
+    {
+        // $this->createMov(50, $manager);
+        // $this->createMov(60, $manager);
+        // $this->createMov(100, $manager);
+
+        $faker = Factory::create('fr_FR');
+
+        for ($i=1; $i <=25 ; $i++) { 
+            $mov = new Movement();
+            $mov->setAmount($faker->numberBetween(1000, 150000));
+            $mov->setPlace($faker->optional->name);
+            $mov->setDate(new \DateTimeImmutable());
+
+            // On va chercher une référence de user
+            $user = $this->getReference('user-'. rand(1, 5));
+            $mov->setUser($user);
+            
+            $manager->persist($mov);
+        }
+
+        $manager->flush();
+
+        // $manager->flush();
+    }
+    
+    public function createMov(string $amount, ObjectManager $manager)
+    {
+        $mov = new Movement;
+        $mov->setAmount($amount);
+        $mov->setPlace('Winamax');
+        $mov->setDate(new \DateTimeImmutable());
+    
+        $manager->persist($mov);
+
+        return $mov;
+    }
+
+    // On créer un nouvelle méthode dû au rajout de "implements DependentFixtureInterface" dans "class MovementFixtures extends Fixture"
+    // Pour dire que UserFixtures doit être executer avant MovementFixtures (car c'est exécuter de manière alphabétique)
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class    
+        ];
+    }
+}
+```
 
 
 
