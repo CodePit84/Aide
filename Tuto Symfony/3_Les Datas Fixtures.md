@@ -270,7 +270,7 @@ class MovementFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i=1; $i <=25 ; $i++) { 
             $mov = new Movement();
-            $mov->setAmount($faker->numberBetween(1000, 150000));
+            $mov->setAmount($faker->numberBetween(-150000, 150000));
             // $mov->setPlace($faker->optional->name);
             $mov->setPlace($faker->optional->randomElement(['Winamax', 'Betclic', 'FDJ']));
             $mov->setDate(new \DateTimeImmutable());
