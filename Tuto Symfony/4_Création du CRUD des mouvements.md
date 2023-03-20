@@ -40,7 +40,6 @@ Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs.
     <div class="container mt-4">
         <h1>Mes mouvements</h1>
 
-        {% for movement in movements %}
             {# {{ dump(movement) }} #}
 
         <table class="table table-hover">
@@ -74,19 +73,16 @@ Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs.
                                 <td>{{ movement.date.format('d/m/Y') }}</td>
                                 {# <td>{{ movement.user_id.id }}</td> #}
                                 <td>
-                                    <a href="#" class="btn btn-info btn-sm">Modifier</a>
+                                    {# <a href="{{ path('app_movement_edit', {id: movement.id}) }}" class="btn btn-info btn-sm">Modifier</a> #}
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous réellement supprimer ce mouvement ?')">Supprimer</a>
+                                    {# <a href="{{ path('app_movement_delete', {id: movement.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous réellement supprimer ce mouvement ?')">Supprimer</a> #}
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
-        
-            
-        {% endfor %}
     </div>
 {% endblock %}
 
