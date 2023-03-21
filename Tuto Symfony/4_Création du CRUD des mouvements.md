@@ -268,4 +268,18 @@ framework:
 ```
 Voilà c'est tout ! ;)
 
-# 8. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
+# 8. On va changer notre requête pour n'afficher que les mouvements de l'utilisateur connecté !
+Dans notre MovementController.php on va donc remplacer
+```
+$movementRepository->findAll(),
+```
+par :
+
+```
+$movementRepository->findBy(['user' => $this->getUser()]),
+``` 
+c'est tout !
+
+# 9. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
+Il va falloir ajouter dans la méthode la somme :
+
