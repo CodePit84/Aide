@@ -142,10 +142,7 @@ class MovementController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
-        
-        $movements = $movementRepository->findAll();
-        // dd($movements);
-        
+                
         return $this->render('movement/index.html.twig', [
             'movements' => $movements
         ]);
@@ -153,3 +150,4 @@ class MovementController extends AbstractController
 }
 ```
 
+On a alors 10 mouvements d'afficher mais pas encore la pagination !
