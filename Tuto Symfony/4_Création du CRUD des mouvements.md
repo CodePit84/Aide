@@ -443,3 +443,84 @@ symfony console make:form
 
  created: src/Form/MovementFormType.php
 ```
+
+11. Créer une vue Ajout (templates)
+En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDeposit.html.twig), 1 pour un encaissement (addWithdraw.html.twig), dans templates/movement :
+
+- addDeposit.html.twig : 
+```
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un mouvement{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Ajout d'une Dépense</h1>
+
+            {# {{ dump(app) }} #}
+
+            {{ form_start(movementForm) }}
+
+                {# {{ dump(movementForm) }} #}
+
+                <fieldset class="mb-3">
+                    <legend>Ma dépense</legend>
+
+                    {{ form_row(movementForm.movement) }}
+                    {{ form_row(movementForm.place) }}
+                    {{ form_row(movementForm.date) }}
+                    {# {{ form_row(movementForm.user_id) }} #}
+
+                </fieldset>
+                <button type="submit" class="btn btn-primary btn-lg my-3">Enregistrer</button>
+            {{ form_end(movementForm) }}        
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{# {{ parent() }} #}
+```
+
+
+- addWithdraw.html.twig : 
+```
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un mouvement{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Ajout d'un Encaissement</h1>
+
+            {# {{ dump(app) }} #}
+
+            {{ form_start(movementForm) }}
+
+        
+                {# {{ dump(movementForm) }} #}
+
+                <fieldset class="mb-3">
+                    <legend>Mon Encaissement</legend>
+
+                    {{ form_row(movementForm.movement) }}
+                    {{ form_row(movementForm.place) }}
+                    {{ form_row(movementForm.date) }}
+                    {# {{ form_row(movementForm.user_id) }} #}
+                </fieldset>
+                <button type="submit" class="btn btn-primary btn-lg my-3">Enregistrer</button>
+            {{ form_end(movementForm) }}        
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{# {{ parent() }} #}
+```
+* *Note* : le ``` {# {{ parent() }} #} ``` nous servira pour la calendrier JS...
+
+Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
