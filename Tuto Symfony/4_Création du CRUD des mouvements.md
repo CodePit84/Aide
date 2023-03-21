@@ -184,7 +184,7 @@ On peut aussi le centrer en utilisant les classes de Bootstrap suivante ``` d-fl
 
             {# {{ dump(movement) }} #}
 
-        <table class="table table-hover">
+        <table class="table table-hover mt-4">
                     <thead class="table-primary">
                         <tr>
                             <th>ID</th>
@@ -227,7 +227,7 @@ On peut aussi le centrer en utilisant les classes de Bootstrap suivante ``` d-fl
                     </tbody>
                 </table>
 
-                <div class="navigation d-flex justify-content-center">
+                <div class="navigation d-flex justify-content-center mt-4">
                     {{ knp_pagination_render(movements) }}
                 </div>
 
