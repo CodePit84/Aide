@@ -117,3 +117,39 @@ knp_paginator:
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
 ``` 
 Pour celà il faut aller dans config\packages et créer un nouveau fichier "knp_paginator.yaml" et lui coller le contenu !
+
+( 👨‍💻 Apprendre #Symfony 6 - CRUD des ingrédients #8 / Développeur Musclé / 17 minutes / https://youtu.be/AcMtHRfg0fk)
+Il va falloir créer au niveau de notre controller une injection de dépendance de KNPPaginator, de de request, ainsi notre MovementController.php, ressemblera à :
+```
+<?php
+
+namespace App\Controller;
+
+use App\Repository\MovementRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class MovementController extends AbstractController
+{
+    #[Route('/movement', name: 'app_movement')]
+    public function index(MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $movements = $paginator->paginate(
+            $movementRepository->findAll(),
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+        
+        $movements = $movementRepository->findAll();
+        // dd($movements);
+        
+        return $this->render('movement/index.html.twig', [
+            'movements' => $movements
+        ]);
+    }
+}
+```
+
