@@ -292,5 +292,139 @@ $movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
 
 # 9. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
 Il va falloir ajouter dans la méthode la somme :
+```
+<?php
 
-On va aussi diviser par 100 car nos sommes sont entrée dans la base de donnée en centimes (integer)
+namespace App\Controller;
+
+use App\Repository\MovementRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class MovementController extends AbstractController
+{
+    /**
+     * This function allows us to display all movement's user
+     *
+     * @param MovementRepository $movementRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/movement', name: 'app_movement')]
+    public function index(MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        // Requête :
+        $movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
+        
+        // La somme de tous les mouvements :
+        $sum = 0;
+        foreach ($movementsUser as $movement) {
+            // dump($movement->getMovement());
+            $sum = $sum + $movement->getAmount();
+        }
+
+        
+        // Pagination :
+        $movements = $paginator->paginate(
+            $movementsUser,
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+                
+        return $this->render('movement/index.html.twig', [
+            'sum' => $sum,
+            'movements' => $movements
+        ]);
+    }
+}
+```
+
+On va aussi diviser par 100 dans la vue, car nos sommes sont entrées dans la base de donnée en centimes (integer) et on va en profiter pour rajouter une conditions s'il l'utilisateurs n'a pas de mouvement :
+``` 
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Mouvements{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        {# Conditions si Mouvements ou Pas : #}
+        {% if not movements.items is same as ([]) %}
+
+        <h3>Mouvements de {{ app.user.name }}</h3> 
+                <div class="ml-auto p-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex">
+                        Solde :
+                        {% if sum > 0 %}
+                            <span class="badge rounded-pill bg-success mx-2">{{ sum / 100 }} €</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger mx-2">{{ sum / 100 }} €</span>
+                        {% endif %}
+                        </div>
+                        <div class="d-flex">
+                        ({{ movements.getTotalItemCount }} mouvements)
+                        </div>
+                    </div>
+                </div>
+
+        <table class="table table-hover mt-4">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Mouvements en €</th>
+                            <th>Endroit</th>
+                            <th>Date</th>
+                            <th>User ID</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movement in movements %}
+                        {# {% for movement in movement.user_id %} #}
+
+                            {# {{ dump(movement) }} #}
+
+                            <tr class="table-info">
+                                <td>{{ movement.id }}</td>
+                                {% if movement.amount <0 %}
+                                    <td class="text-danger"><strong>{{ movement.amount / 100 }}<strong></td>
+                                {% else %}
+                                    <td class="text-success"><strong>+{{ movement.amount / 100 }}<strong></td>
+                                
+                                {% endif %}
+                                
+                                <td>{{ movement.place }}</td>
+                                <td>{{ movement.date.format('d/m/Y') }}</td>
+                                <td>{{ movement.user.id }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm">Modifier</a>
+                                    {# <a href="{{ path('app_movement_edit', {id: movement.id}) }}" class="btn btn-info btn-sm">Modifier</a> #}
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous réellement supprimer ce mouvement ?')">Supprimer</a>
+                                    {# <a href="{{ path('app_movement_delete', {id: movement.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous réellement supprimer ce mouvement ?')">Supprimer</a> #}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="navigation d-flex justify-content-center mt-4">
+                    {{ knp_pagination_render(movements) }}
+                </div>
+
+        {% else %}
+            <h4>Il n'y a pas de mouvements</h4>
+        {% endif %}
+
+    </div>
+{% endblock %}
+``` 
+
+# 10. On va procéder maintenant à l'ajout d'un mouvement :
