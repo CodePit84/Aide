@@ -620,5 +620,7 @@ symfony console make:migration
 (symfony console d:m:m)
 symfony console d:f:l
 ```
+# 12. On peut intégrer aussi les classes de formulaire de Bootstrap automatiquement comme ceci :
+https://github.com/CodePit84/Aide/blob/main/Tuto%20Symfony/Int%C3%A9grer%20les%20classes%20Bootstrap%20pour%20les%20formulaires.md
 
-# 12. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
+# 13. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
