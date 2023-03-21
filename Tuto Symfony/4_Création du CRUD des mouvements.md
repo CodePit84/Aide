@@ -251,3 +251,21 @@ Que l'ont peut rajouter en haut, ce qui nous donnera au final :
     </div>
 {% endblock %}
 ```
+# 7. On va traduire notre Paginator et en profiter pour mettre le projet symfony en français !
+Dans config/services.yaml rajouter le paramètre suivant :
+```
+parameters:
+    locale: 'fr'
+```  
+et dans config/packages/translation.yaml, passer en fr :
+```
+framework:
+    default_locale: fr
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks:
+            - fr
+```
+Voilà c'est tout ! ;)
+
+# 8. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
