@@ -612,4 +612,13 @@ On va corriger tout ça au niveau de notre Entity/Mouvement.php et remplacer le 
 ```
 J'ai mis en commentaire volontairement ce qu'il y a a remplacé par ce qui n'est pas en commentaire... ;)
 
+Il faut effacer la bdd, faire la migration et réimporter des fixtures, allez hop :
+```
+symfony console d:d:d --force
+symfony console d:d:c
+symfony console make:migration
+(symfony console d:m:m)
+symfony console d:f:l
+```
+
 # 12. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
