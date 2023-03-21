@@ -174,6 +174,21 @@ knp_paginator:
 ```
 On peut aussi le centrer en utilisant les classes de Bootstrap suivante ``` d-flex justify-content-center ``` , ce qui donnera donc :
 ```
+<div class="navigation d-flex justify-content-center mt-4">
+    {{ knp_pagination_render(movements) }}
+</div>
+
+```
+
+# 6. On peut même au niveau de notre vue rajouter le nombre de mouvements.
+KNPPaginator nous propose le twig suivant :
+``` 
+<div class="count">
+    {{ movements.getTotalItemCount }}
+</div>
+```
+Que l'ont peut rajouter en haut, ce qui nous donneras au final :
+```
 {% extends 'base.html.twig' %}
 
 {% block title %}Mes Mouvements{% endblock %}
@@ -183,6 +198,9 @@ On peut aussi le centrer en utilisant les classes de Bootstrap suivante ``` d-fl
         <h1>Mes mouvements</h1>
 
             {# {{ dump(movement) }} #}
+        <div class="count">
+            Il y a {{ movements.getTotalItemCount }} mouvements au total
+        </div>
 
         <table class="table table-hover mt-4">
                     <thead class="table-primary">
