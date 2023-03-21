@@ -468,7 +468,7 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
                 <fieldset class="mb-3">
                     <legend>Ma dépense</legend>
 
-                    {{ form_row(movementForm.movement) }}
+                    {{ form_row(movementForm.amount) }}
                     {{ form_row(movementForm.place) }}
                     {{ form_row(movementForm.date) }}
                     {# {{ form_row(movementForm.user_id) }} #}
@@ -480,8 +480,6 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
     </div>
 </section>
 {% endblock %}
-
-{# {{ parent() }} #}
 ```
 
 
@@ -507,7 +505,7 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
                 <fieldset class="mb-3">
                     <legend>Mon Encaissement</legend>
 
-                    {{ form_row(movementForm.movement) }}
+                    {{ form_row(movementForm.amount) }}
                     {{ form_row(movementForm.place) }}
                     {{ form_row(movementForm.date) }}
                     {# {{ form_row(movementForm.user_id) }} #}
@@ -518,9 +516,8 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
     </div>
 </section>
 {% endblock %}
-
-{# {{ parent() }} #}
 ```
-* *Note* : le ``` {# {{ parent() }} #} ``` nous servira pour la calendrier JS...
+
+Au Niveau de notre formulaire MovementFormType, on peut supprimer le ``` ->add('user') ``` on le settera (set) au niveau de notre controller... 
 
 Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
