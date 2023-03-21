@@ -444,7 +444,7 @@ symfony console make:form
  created: src/Form/MovementFormType.php
 ```
 
-11. Créer une vue Ajout (templates)
+# 11. Créer une vue Ajout (templates)
 En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDeposit.html.twig), 1 pour un encaissement (addWithdraw.html.twig), dans templates/movement :
 
 - addDeposit.html.twig : 
@@ -577,7 +577,7 @@ class MovementFormType extends AbstractType
     }
 }
 ``` 
-# :caution: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
+# :warning: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
 On va corriger tout ça au niveau de notre Entity/Mouvement.php et remplacer le champs ainsi que ses get/set :
 ```
     // #[ORM\Column(type: Types::DATE_IMMUTABLE)]
