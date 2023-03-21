@@ -150,4 +150,10 @@ class MovementController extends AbstractController
 }
 ```
 
-On a alors 10 mouvements d'afficher mais pas encore la pagination !
+On a alors 10 mouvements d'afficher mais pas encore la pagination ! Simple parceque dans notre vue, on doit rajouter ceci en bas de la page :
+```
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+```
+Ce qui donnera donc :
