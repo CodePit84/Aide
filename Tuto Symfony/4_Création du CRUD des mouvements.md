@@ -428,3 +428,18 @@ On va aussi diviser par 100 dans la vue, car nos sommes sont entrées dans la ba
 ``` 
 
 # 10. On va procéder maintenant à l'ajout d'un mouvement :
+```
+symfony console make:form
+``` 
+que l'on appellera "MovementFormType" et que l'on liera à l'entitée Movement :
+``` 
+symfony console make:form
+
+ The name of the form class (e.g. TinyPuppyType):
+ > MovementFormType
+
+ The name of Entity or fully qualified model class name that the new form will be bound to (empty for none):
+ > Movement
+
+ created: src/Form/MovementFormType.php
+```
