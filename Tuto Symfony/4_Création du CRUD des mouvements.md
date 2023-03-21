@@ -518,6 +518,64 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
 {% endblock %}
 ```
 
-Au Niveau de notre formulaire MovementFormType, on peut supprimer le ``` ->add('user') ``` on le settera (set) au niveau de notre controller... 
+Au Niveau de notre formulaire MovementFormType, on peut supprimer le ``` ->add('user') ``` on le settera (set) au niveau de notre controller... Mais on va lui donner un peut de gueule avec les classes Bootstrap (à noter le spoil de la Date en commentaire, car on passera par un widget JS)
+```
+<?php
 
-Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
+namespace App\Form;
+
+use App\Entity\Movement;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+class MovementFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('amount', MoneyType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Montant'    
+            ])
+            ->add('place', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3 form-select'
+                ],
+                'label' => 'Endroit',
+                'choices' => [
+                    'Choisir (facultatif)' => ' ',
+                    'Betclic' => 'Betclic',
+                    'Winamax' => 'Winamax',
+                    'FDJ' => 'FDJ' 
+                    ]
+            ])
+            ->add('date', DateType::class, [
+                // 'widget' => 'single_text',
+                // 'html5' => false,
+                // 'attr' => [
+                //     'class' => 'form-control js-datepicker'
+                // ],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Date'
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Movement::class,
+        ]);
+    }
+}
+``` 
+
+# 12. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
