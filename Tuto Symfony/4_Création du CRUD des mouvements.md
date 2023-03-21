@@ -577,5 +577,39 @@ class MovementFormType extends AbstractType
     }
 }
 ``` 
+# :caution: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
+On va corriger tout ça au niveau de notre Entity/Mouvement.php et remplacer le champs ainsi que ses get/set :
+```
+    // #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    // private ?\DateTimeImmutable $date = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+    
+    
+    
+
+    // public function getDate(): ?\DateTimeImmutable
+    // {
+    //     return $this->date;
+    // }
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    // public function setDate(\DateTimeImmutable $date): self
+    // {
+    //     $this->date = $date;
+
+    //     return $this;
+    // }
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+```
+J'ai mis en commentaire volontairement ce qu'il y a a remplacé par ce qui n'est pas en commentaire... ;)
 
 # 12. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
