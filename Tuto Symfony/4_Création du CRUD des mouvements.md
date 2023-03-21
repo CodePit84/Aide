@@ -279,7 +279,18 @@ par :
 $movementRepository->findBy(['user' => $this->getUser()]),
 ``` 
 c'est tout !
+Pour plus de lisibilité et pour la suite on va plutôt le mettre dans une variable :
+```
+$movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
+        
+        $movements = $paginator->paginate(
+            $movementsUser,
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+```
 
 # 9. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
 Il va falloir ajouter dans la méthode la somme :
 
+On va aussi diviser par 100 car nos sommes sont entrée dans la base de donnée en centimes (integer)
