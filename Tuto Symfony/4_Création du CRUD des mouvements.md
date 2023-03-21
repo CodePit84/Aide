@@ -455,7 +455,7 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
 
 {% block body %}
 <section class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col">
             <h1>Ajout d'une Dépense</h1>
 
@@ -491,7 +491,7 @@ En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDe
 
 {% block body %}
 <section class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col">
             <h1>Ajout d'un Encaissement</h1>
 
