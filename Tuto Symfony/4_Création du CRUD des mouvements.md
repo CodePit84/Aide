@@ -844,5 +844,222 @@ Dans le controller on rajoutera la route suivante :
     }
 ``` 
 
-#16. La sécurité des accès à nos Routes :
+# 16. La sécurité des accès à nos Routes :
 Il va falloir tout sécuriser pour qu'un utilisateur n'aie accès qu'à ses propres mouvements...
+Pour celà nous devons rajouter dans notre function : ``` User $choosenUser ```  une Route Secourity au dessus de la Route ``` #[Security("is_granted('ROLE_USER') and user === choosenUser")] ``` et le use qui va avec ``` use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; ``` pour qu'on obtienne au final un MovementController.php ainsi :
+``` 
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Entity\Movement;
+use App\Form\MovementFormType;
+use App\Repository\MovementRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class MovementController extends AbstractController
+{
+    /**
+     * This function allows us to display all movement's user
+     *
+     * @param MovementRepository $movementRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+     #[Route('/movement', name: 'app_movement')]
+    public function index(User $choosenUser, MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        // Requête :
+        $movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
+        
+        // La somme de tous les mouvements :
+        $sum = 0;
+        foreach ($movementsUser as $movement) {
+            // dump($movement->getMovement());
+            $sum = $sum + $movement->getAmount();
+        }
+
+        
+        // Pagination :
+        $movements = $paginator->paginate(
+            $movementsUser,
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+                
+        return $this->render('movement/index.html.twig', [
+            'sum' => $sum,
+            'movements' => $movements
+        ]);
+    }
+
+    /**
+     * This function allows us to Add a Withdraw
+     *
+     * @param User $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Route('/movement/addWithdraw/user/{id}', name: 'app_movement_addWithdraw_user')]
+    public function addWithdraw(User $choosenUser, Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $userId = $user->getId();
+        
+        $movement = new Movement();
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // ceci fonctionnait :
+            // $form->getData()->setUser($user);
+
+            $movement = $form->getData();
+            // dd($movement);
+
+            $movement->setUser($this->getUser());
+
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement ajouté avec succès');
+
+            // return $this->redirectToRoute('app_movement_user', array('id' => $userId));
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/addWithdraw.html.twig', [
+            'movementForm' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * This function allows us to Add a Deposit
+     *
+     * @param User $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Route('/movement/addDeposit/user/{id}', name: 'app_movement_addDeposit_user')]
+    public function addDeposit(User $choosenUser, Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $userId = $user->getId();
+        
+        $movement = new Movement();
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $movement = $form->getData();
+            $movement->setUser($this->getUser());
+
+            // Pour transformer la valeur en négatif
+            $amount = $movement->getAmount() * -1 ;
+            $movement->setAmount($amount);
+
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement ajouté avec succès');
+
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/addDeposit.html.twig', [
+            'movementForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * This function allows us to Edit a movement
+     *
+     * @param User $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Route('/movement/edit/{id}', name: 'app_movement_edit')]
+    public function edit(User $choosenUser, Movement $movement, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // On récupère le montant
+        $movementAmount = $movement->getAmount();
+        
+        // On crée une variable isDeposit qui permet de savoir si c'est une dépense et on remet le montant en positif (*-1) pour l'affichage
+        if ($movementAmount < 0) {
+            $movement->setAmount($movementAmount * -1);
+            $isDeposit = true;
+        } else {
+            $isDeposit = false;
+        }
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Si c'est une dépense on remet le montant en négatif
+            if ($isDeposit) {
+                $amount = $movement->getAmount() * -1 ;
+                $movement->setAmount($amount);
+            }
+               
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement modifié avec succès');
+
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/edit.html.twig', [
+            'movementForm' => $form->createView(),
+            'movement' => $movement,
+            'isDeposit' => $isDeposit
+        ]);
+    }
+
+    /**
+     * This function allows us to Delete a movement
+     *
+     * @param User $choosenUser
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param User $user
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Route('/movement/delete/{id}', name: 'app_movement_delete')]
+    public function delete(User $choosenUser, Movement $movement, EntityManagerInterface $entityManager):Response
+    {
+        $entityManager->remove($movement);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Mouvement supprimé avec succès');
+
+        return $this->redirectToRoute('app_movement');
+    }
+
+}
+```
+Voilà !
