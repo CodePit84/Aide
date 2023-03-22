@@ -627,3 +627,130 @@ symfony console d:f:l
 https://github.com/CodePit84/Aide/blob/main/Tuto%20Symfony/Int%C3%A9grer%20les%20classes%20Bootstrap%20pour%20les%20formulaires.md
 
 # 13. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
+(en fait 2 car on a 2 méthodes, une pour le deposit et une pour le withdraw :
+``` 
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Entity\Movement;
+use App\Form\MovementFormType;
+use App\Repository\MovementRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class MovementController extends AbstractController
+{
+    /**
+     * This function allows us to display all movement's user
+     *
+     * @param MovementRepository $movementRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/movement', name: 'app_movement')]
+    public function index(MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        // Requête :
+        $movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
+        
+        // La somme de tous les mouvements :
+        $sum = 0;
+        foreach ($movementsUser as $movement) {
+            // dump($movement->getMovement());
+            $sum = $sum + $movement->getAmount();
+        }
+
+        
+        // Pagination :
+        $movements = $paginator->paginate(
+            $movementsUser,
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+                
+        return $this->render('movement/index.html.twig', [
+            'sum' => $sum,
+            'movements' => $movements
+        ]);
+    }
+
+    #[Route('/movement/addWithdraw/user/{id}', name: 'app_movement_addWithdraw_user')]
+    public function addWithdraw(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $userId = $user->getId();
+        
+        $movement = new Movement();
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // ceci fonctionnait :
+            // $form->getData()->setUser($user);
+
+            $movement = $form->getData();
+            // dd($movement);
+
+            $movement->setUser($this->getUser());
+
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement ajouté avec succès');
+
+            // return $this->redirectToRoute('app_movement_user', array('id' => $userId));
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/addWithdraw.html.twig', [
+            'movementForm' => $form->createView(),
+        ]);
+    }
+    
+    #[Route('/movement/addDeposit/user/{id}', name: 'app_movement_addDeposit_user')]
+    public function addDeposit(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    {
+        $userId = $user->getId();
+        
+        $movement = new Movement();
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $movement = $form->getData();
+            $movement->setUser($this->getUser());
+
+            // Pour transformer la valeur en négatif
+            $amount = $movement->getAmount() * -1 ;
+            $movement->setAmount($amount);
+
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement ajouté avec succès');
+
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/addDeposit.html.twig', [
+            'movementForm' => $form->createView(),
+        ]);
+    }
+}
+```
+
+# 14. Passons à l'édition, celà sera relativement pareil !
+Créons une route au niveau de notre Controller :
+
