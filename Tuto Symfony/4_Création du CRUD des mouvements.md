@@ -1075,3 +1075,58 @@ par :
 pour que l'utilisateur passe dans l'URL...
     
 # 17 : On va devoir créer enfin nos liens dans nos vues pour facilement accéder à nos Routes :
+Dans un premier temps notre templates/partials/_header.html.twig
+``` 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">SymBetcheck</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        {% if app.user %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_movement_user', {id: app.user.id}) }}">Consulter</a>
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajouter </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ path('app_movement_addDeposit_user', {id: app.user.id}) }}">Une dépense</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('app_movement_addWithdraw_user', {id: app.user.id}) }}">Un encaissement</a>
+          </div>
+        </li>
+        {% endif %}
+        {# <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li> #}
+      </ul>
+      <ul class="navbar-nav ms-auto">
+      {% if app.user %}
+        <li class="nav-item">
+          {# <a class="nav-link" href="{{ path('app_edit_user', {id: app.user.id}) }}">Mon profil</a> #}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout') }}">Me déconnecter</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_register') }}">M'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Me Connecter</a>
+        </li>      
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+J'ai laissé vonlontaire en commentaire le futur lien pour l'édition du profil...
