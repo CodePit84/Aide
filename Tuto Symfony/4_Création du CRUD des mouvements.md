@@ -867,7 +867,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MovementController extends AbstractController
 {
     /**
-     * This function allows us to display all movement's user
+     * This function allows us to View / Display all movement's user
      *
      * @param MovementRepository $movementRepository
      * @param PaginatorInterface $paginator
@@ -875,7 +875,8 @@ class MovementController extends AbstractController
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and user === choosenUser")]
-     #[Route('/movement', name: 'app_movement')]
+    // #[Route('/movement', name: 'app_movement')]
+    #[Route('/movement/user/{id}', name: 'app_movement_user')]
     public function index(User $choosenUser, MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Requête :
@@ -1062,4 +1063,10 @@ class MovementController extends AbstractController
 
 }
 ```
-Voilà !
+Voilà ! A noter que pour l'affichage des mouvement de l'utilisateur on a dû changer la Route :
+On a remplacer : 
+``` #[Route('/movement', name: 'app_movement')] ``` 
+par :
+``` #[Route('/movement/user/{id}', name: 'app_movement_user')] ```
+pour que l'utilisateur passe dans l'URL...
+    
