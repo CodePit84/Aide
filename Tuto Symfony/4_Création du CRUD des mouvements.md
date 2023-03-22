@@ -541,7 +541,8 @@ class MovementFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'Montant'    
+                'label' => 'Montant',
+                'divisor' => 100
             ])
             ->add('place', ChoiceType::class, [
                 'attr' => [
@@ -577,6 +578,8 @@ class MovementFormType extends AbstractType
     }
 }
 ``` 
+A noté le 'divisor' => 100 au niveau de l'add('amount') car nos prix doivent être enregistrés en centimes dans la bdd !
+
 # :warning: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
 On va corriger tout ça au niveau de notre Entity/Mouvement.php et remplacer le champs ainsi que ses get/set :
 ```
