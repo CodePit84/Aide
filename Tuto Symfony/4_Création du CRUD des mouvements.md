@@ -1065,8 +1065,13 @@ class MovementController extends AbstractController
 ```
 Voilà ! A noter que pour l'affichage des mouvement de l'utilisateur on a dû changer la Route :
 On a remplacer : 
+
 ``` #[Route('/movement', name: 'app_movement')] ``` 
+
 par :
+
 ``` #[Route('/movement/user/{id}', name: 'app_movement_user')] ```
+
 pour que l'utilisateur passe dans l'URL...
     
+# 17 : On va devoir créer enfin nos liens dans nos vues pour facilement accéder à nos Routes :
