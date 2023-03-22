@@ -829,3 +829,20 @@ On crée donc donc un fichier edit.html.twig :
 ```
 Voilà l'édition est terminé, On peut Voir les mouvements, en Ajouter, les Editer, il nous reste plus qu'à pouvoir les Supprimer ! ;)
 
+# 15. Suppression d'un mouvement
+Dans le controller on rajoutera la route suivante :
+``` 
+    #[Route('/movement/delete/{id}', name: 'app_movement_delete')]
+    public function delete(Movement $movement, EntityManagerInterface $entityManager):Response
+    {
+        $entityManager->remove($movement);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Mouvement supprimé avec succès');
+
+        return $this->redirectToRoute('app_movement');
+    }
+``` 
+
+#16. La sécurité des accès à nos Routes :
+Il va falloir tout sécuriser pour qu'un utilisateur n'aie accès qu'à ses propres mouvements...
