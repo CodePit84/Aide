@@ -753,4 +753,79 @@ class MovementController extends AbstractController
 
 # 14. Passons à l'édition, celà sera relativement pareil !
 Créons une route au niveau de notre Controller :
+```
+#[Route('/movement/edit/{id}', name: 'app_movement_edit')]
+    public function edit(Movement $movement, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // On récupère le montant
+        $movementAmount = $movement->getAmount();
+        
+        // On crée une variable isDeposit qui permet de savoir si c'est une dépense et on remet le montant en positif (*-1) pour l'affichage
+        if ($movementAmount < 0) {
+            $movement->setAmount($movementAmount * -1);
+            $isDeposit = true;
+        } else {
+            $isDeposit = false;
+        }
+        
+        $form = $this->createForm(MovementFormType::class, $movement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Si c'est une dépense on remet le montant en négatif
+            if ($isDeposit) {
+                $amount = $movement->getAmount() * -1 ;
+                $movement->setAmount($amount);
+            }
+               
+            $entityManager->persist($movement);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Mouvement modifié avec succès');
+
+            return $this->redirectToRoute('app_movement');
+        }
+        
+        return $this->render('movement/edit.html.twig', [
+            'movementForm' => $form->createView(),
+            'movement' => $movement,
+            'isDeposit' => $isDeposit
+        ]);
+    }
+```
+J'ai rajouté des conditions et une variable (bool) isDeposit pour que l'affichage reste des valeurs positives, que l'on enverra à la vue...
+
+Il faut aussi modifié légèrement la vue, qui inclura la lecture de cette variable mais qui reprend les mêmes grandes lignes que nos add*****.html.twig
+
+On crée donc donc un fichier edit.html.twig :
+``` 
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un mouvement{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+    {# {{ dump(isDeposit) }} #}
+        <div class="col">
+            {% if isDeposit %}
+                <h1>Modification d'une Dépense</h1>
+            {% else %}
+                <h1>Modification d'un Encaissement</h1>    
+            {% endif %}
+            {{ form_start(movementForm) }}
+                <fieldset class="mb-3">
+                    <legend>Mon mouvement</legend>
+                    {{ form_row(movementForm.amount) }}
+                    {{ form_row(movementForm.place) }}
+                    {{ form_row(movementForm.date) }}
+                </fieldset>
+                <button type="submit" class="btn btn-primary btn-lg my-3">Enregistrer</button>
+            {{ form_end(movementForm) }}        
+        </div>
+    </div>
+</section>
+{% endblock %}
+```
+Voilà l'édition est terminé, On peut Voir les mouvements, en Ajouter, les Editer, il nous reste plus qu'à pouvoir les Supprimer ! ;)
 
