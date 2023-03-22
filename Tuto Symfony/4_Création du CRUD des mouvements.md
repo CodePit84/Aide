@@ -805,7 +805,7 @@ On crée donc donc un fichier edit.html.twig :
 
 {% block body %}
 <section class="container">
-    <div class="row">
+    <div class="row mt-4">
     {# {{ dump(isDeposit) }} #}
         <div class="col">
             {% if isDeposit %}
