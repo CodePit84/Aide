@@ -38,11 +38,32 @@ jQuery(document).ready(function() {
 });
 ```  
 Au niveau de nos formulaires réclamant la date on mettra :
+ici un seul formulaire src/Form/MovementFormType.php :
+avant on avait :
 ```
-xxxxxxxxxx
+->add('date', DateType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Date'
+            ])
+``` 
+et on va mettre :
+
+```
+->add('date', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'form-control js-datepicker'
+                ],
+                'label' => 'Date'
+            ])
 ```  
 
+## Voilà c'est tout !! ;)
 _____________________
+## On récapitule avec l'ensemble des fichiers que l'on a modifier (pour la suite du tuto)
 ce qui donnera base.html.twig :
 ``` 
 <!DOCTYPE html>
@@ -96,3 +117,65 @@ ce qui donnera base.html.twig :
     </body>
 </html>
 ```
+et MovementFormType.php :
+``` 
+<?php
+
+namespace App\Form;
+
+use App\Entity\Movement;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class MovementFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('amount', MoneyType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Montant',
+                'divisor' => 100,
+                // 'constraints' => [
+                //     new Assert\NotBlank()
+                // ]
+            ])
+            ->add('place', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3 form-select'
+                ],
+                'label' => 'Endroit',
+                'choices' => [
+                    'Choisir (facultatif)' => ' ',
+                    'Betclic' => 'Betclic',
+                    'Winamax' => 'Winamax',
+                    'FDJ' => 'FDJ' 
+                    ]
+            ])
+            ->add('date', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'form-control js-datepicker'
+                ],
+                'label' => 'Date'
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Movement::class,
+        ]);
+    }
+}
+``` 
