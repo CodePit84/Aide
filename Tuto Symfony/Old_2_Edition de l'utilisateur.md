@@ -384,14 +384,14 @@ templates/registration/edit_user.html.twig :
                     {{ form_row(editUserForm.plainPassword) }}
 
                 <button type="submit" class="btn btn-primary btn-lg my-3">Sauvegarder</button>
-                <a href="{{ path('app_edit_password_user', {id: app.user.id}) }}" class="btn btn-warning">Modifier le mot de passe</a>           
+                {# <a href="{{ path('app_edit_password_user', {id: app.user.id}) }}" class="btn btn-warning">Modifier le mot de passe</a>            #}
             {{ form_end(editUserForm) }} 
         </div>
     </div>
 </section>
 {% endblock %}
 ``` 
-
+J'ai mis en commentaire le future lien de la modification du mot de passe...
 
 ## 5. Pour l'édition (modification) du mot de passe :
 On rajoute la nouvelle méthode (editPassword) dans le UserController.php
