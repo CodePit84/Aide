@@ -1,4 +1,4 @@
-Petite traduction du message d'erreur lorsque l'on veut rentrer (dans l'édition par exemple ou l'inscription) un email déjà rentré dans la bdd :
+## Petite traduction du message d'erreur lorsque l'on veut rentrer (dans l'édition par exemple ou l'inscription) un email déjà rentré dans la bdd :
 
 Dans src/Entity/User.php, remplacer : 
 ``` 
