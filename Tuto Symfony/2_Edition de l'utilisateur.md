@@ -263,7 +263,7 @@ class EditUserFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control mb-3'
                 ],
-                'label' => 'Pseudo'    
+                'label' => 'Nom'    
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
