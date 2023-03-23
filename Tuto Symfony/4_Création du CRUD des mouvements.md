@@ -867,15 +867,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MovementController extends AbstractController
 {
     /**
-     * This function allows us to View / Display all movement's user
+     * This controller allows us to View / Display all movement's user
      *
+     * @param User $choosenUser
      * @param MovementRepository $movementRepository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and user === choosenUser")]
-    // #[Route('/movement', name: 'app_movement')]
     #[Route('/movement/user/{id}', name: 'app_movement_user')]
     public function index(User $choosenUser, MovementRepository $movementRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -888,7 +888,6 @@ class MovementController extends AbstractController
             // dump($movement->getMovement());
             $sum = $sum + $movement->getAmount();
         }
-
         
         // Pagination :
         $movements = $paginator->paginate(
@@ -904,19 +903,18 @@ class MovementController extends AbstractController
     }
 
     /**
-     * This function allows us to Add a Withdraw
+     * This controller allows us to Add a Withdraw
      *
      * @param User $choosenUser
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param User $user
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and user === choosenUser")]
     #[Route('/movement/addWithdraw/user/{id}', name: 'app_movement_addWithdraw_user')]
-    public function addWithdraw(User $choosenUser, Request $request, EntityManagerInterface $entityManager, User $user): Response
+    public function addWithdraw(User $choosenUser, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $userId = $user->getId();
+        $userId = $choosenUser->getId();
         
         $movement = new Movement();
         
@@ -939,8 +937,7 @@ class MovementController extends AbstractController
 
             $this->addFlash('success', 'Mouvement ajouté avec succès');
 
-            // return $this->redirectToRoute('app_movement_user', array('id' => $userId));
-            return $this->redirectToRoute('app_movement');
+            return $this->redirectToRoute('app_movement_user', array('id' => $userId));
         }
         
         return $this->render('movement/addWithdraw.html.twig', [
@@ -949,19 +946,18 @@ class MovementController extends AbstractController
     }
     
     /**
-     * This function allows us to Add a Deposit
+     * This controller allows us to Add a Deposit
      *
-     * @param User $choosenUser
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param User $user
+     * @param User $choosenUser
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and user === choosenUser")]
     #[Route('/movement/addDeposit/user/{id}', name: 'app_movement_addDeposit_user')]
-    public function addDeposit(User $choosenUser, Request $request, EntityManagerInterface $entityManager, User $user): Response
+    public function addDeposit(Request $request, EntityManagerInterface $entityManager, User $choosenUser): Response
     {
-        $userId = $user->getId();
+        $userId = $choosenUser->getId();
         
         $movement = new Movement();
         
@@ -983,7 +979,7 @@ class MovementController extends AbstractController
 
             $this->addFlash('success', 'Mouvement ajouté avec succès');
 
-            return $this->redirectToRoute('app_movement');
+            return $this->redirectToRoute('app_movement_user', array('id' => $userId));
         }
         
         return $this->render('movement/addDeposit.html.twig', [
@@ -992,18 +988,22 @@ class MovementController extends AbstractController
     }
 
     /**
-     * This function allows us to Edit a movement
+     * This controller allows us to Edit a movement
      *
-     * @param User $choosenUser
+     * @param Movement $movement
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param User $user
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Security("is_granted('ROLE_USER') and user === movement.getUser()")]
     #[Route('/movement/edit/{id}', name: 'app_movement_edit')]
-    public function edit(User $choosenUser, Movement $movement, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Movement $movement, Request $request, EntityManagerInterface $entityManager): Response
     {
+        // On récupère l'Id de l'utilisateur courant pour le redirectToRoute :
+        // $userId = $user->getId();
+        // $userId = $this->getUser()->getId();
+        $userId = $movement->getUser()->getId();
+        
         // On récupère le montant
         $movementAmount = $movement->getAmount();
         
@@ -1030,7 +1030,7 @@ class MovementController extends AbstractController
 
             $this->addFlash('success', 'Mouvement modifié avec succès');
 
-            return $this->redirectToRoute('app_movement');
+            return $this->redirectToRoute('app_movement_user', array('id' => $userId));
         }
         
         return $this->render('movement/edit.html.twig', [
@@ -1041,24 +1041,24 @@ class MovementController extends AbstractController
     }
 
     /**
-     * This function allows us to Delete a movement
+     * This controller allows us to Delete a movement
      *
-     * @param User $choosenUser
-     * @param Request $request
+     * @param Movement $movement
      * @param EntityManagerInterface $entityManager
-     * @param User $user
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
+    #[Security("is_granted('ROLE_USER') and user === movement.getUser()")]
     #[Route('/movement/delete/{id}', name: 'app_movement_delete')]
-    public function delete(User $choosenUser, Movement $movement, EntityManagerInterface $entityManager):Response
+    public function delete(Movement $movement, EntityManagerInterface $entityManager):Response
     {
+        $userId = $movement->getUser()->getId();
+
         $entityManager->remove($movement);
         $entityManager->flush();
 
         $this->addFlash('success', 'Mouvement supprimé avec succès');
 
-        return $this->redirectToRoute('app_movement');
+        return $this->redirectToRoute('app_movement_user', array('id' => $userId));
     }
 
 }
@@ -1073,6 +1073,18 @@ par :
 ``` #[Route('/movement/user/{id}', name: 'app_movement_user')] ```
 
 pour que l'utilisateur passe dans l'URL...
+
+donc on a dû changer tous nos redirectToRoute :
+``` 
+return $this->redirectToRoute('app_movement');
+```
+par :
+``` 
+return $this->redirectToRoute('app_movement_user', array('id' => $userId));
+```
+parce que l'id demandé doit être du type array et pas string...
+et que l'on doit rajouter dans la méthode ``` $userId = $movement->getUser()->getId(); ``` pour récupérer l'id de l'utilisateur courant...
+
     
 # 17 : On va devoir créer enfin nos liens dans nos vues pour facilement accéder à nos Routes :
 Dans un premier temps notre templates/partials/_header.html.twig
