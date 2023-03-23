@@ -1,6 +1,6 @@
 # Pour notre application, on aurait besoin de l'affichage d'un calendrier pour le choix de la date.
 
-# 1. Pour celà on va utiliser DATEPICKER, on va rajouter dans notre templates/base.html.twig les extensions suivantes :
+## 1. Pour celà on va utiliser DATEPICKER, on va rajouter dans notre templates/base.html.twig les extensions suivantes :
 ``` 
         <!-- Appel de la Feuille de style minifiée De l'extension Datepicker -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -16,7 +16,7 @@
 
 à la suite de nos feuilles de styles Bootstrap et de son noyau Javascript.
 
-# 2. Dans notre dossier "public", on va créer un dossier "assets", et créer un dossier "js" dans celui-ci. Là on va créer un fichier "scripts.js" contenant :
+## 2. Dans notre dossier "public", on va créer un dossier "assets", et créer un dossier "js" dans celui-ci. Là on va créer un fichier "scripts.js" contenant :
 ``` 
 $.fn.datepicker.dates['fr'] = {
     days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
