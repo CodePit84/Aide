@@ -197,11 +197,11 @@ What type of relationship is this?
 
  Next: When you're ready, create a migration with php bin/console make:migration
 ``` 
-10. On va préparer la migration avec la commande :
+## 9. On va préparer la migration avec la commande :
 ```
 symfony console make:migration
 ```
-11. On va procéder à la migration avec la commande :
+## 10. On va procéder à la migration avec la commande :
 ```
 symfony console doctrine:migrations:migrate
 ```
@@ -210,7 +210,7 @@ ou
 symfony console d:m:m
 ```
 
-12. On va Créer un HomeController.php pour l'affichage de notre première page :
+## 11. On va Créer un HomeController.php pour l'affichage de notre première page :
 ```
 symfony console make:controller Home
 ```
@@ -227,7 +227,7 @@ class HomeController extends AbstractController
     }
 }
 ```
-13. Dans templates/base.html.twig rajouter les balises Meta de votre thème Bootstrap ou Bootswatch, et vos scripts js, par exemple :
+## 12. Dans templates/base.html.twig rajouter les balises Meta de votre thème Bootstrap ou Bootswatch, et vos scripts js, par exemple :
 
 ```
 <!DOCTYPE html>
@@ -365,7 +365,7 @@ et de notre templates/partials/_flash.html.twig:
 {% endfor %}
 ``` 
 
-14. Nous allons créer un système d'authentification avec la commande :
+## 13. Nous allons créer un système d'authentification avec la commande :
 
 [Chap.5 / Symfony6 / Nouvelle Techno]
 ```
@@ -388,7 +388,7 @@ et répondez 1. et lui donner le nom de UsersAuthenticator
  Do you want to generate a '/logout' URL? (yes/no) [yes]:
  > 
 ``` 
-15. Dans src/Security/UsersAuthenticator.php :
+## 14. Dans src/Security/UsersAuthenticator.php :
 - commenter throw new \Exception
 - et décommenter return new RedirectResponse  et lui mettre la Route désirée pour la redirection en cas d'authentification réussie (ici : home).
 ```
@@ -403,7 +403,7 @@ et répondez 1. et lui donner le nom de UsersAuthenticator
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 ```
-16. Pour plus de gueule avec Bootstrap, dans le bloc Body, insérer une section et un container dans templates/security/login.html.twig
+## 15. Pour plus de gueule avec Bootstrap, dans le bloc Body, insérer une section et un container dans templates/security/login.html.twig
 
 en emmet faire : ```section.container>div.row>div.col``` et mettre le formulaire dedans.
 Pour obtenir
@@ -462,7 +462,7 @@ Pour obtenir
 ```
 J'ai commenté la ligne du lien de l'inscription car la route n'existe pas encore ainsi que le formulaire qui va avec...
 
-17. Il faut désormais créer le formulaire d'inscription :
+## 16. Il faut désormais créer le formulaire d'inscription :
 ```
 symfony console make:registration-form
 ```
@@ -479,7 +479,7 @@ et valider tout, sauf la vérification par email :
  Do you want to automatically authenticate the user after registration? (yes/no) [yes]:
  > 
 ```
-18. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants du formulaire dans son builder, par exemple :
+## 17. Dans src/Form/RegistrationFormType.php il va falloir ajouter les champs manquants du formulaire dans son builder, par exemple :
 
 ```
 ->add('name')
@@ -487,7 +487,7 @@ et valider tout, sauf la vérification par email :
 
 Vous pouvez aussi changer le agreeTerms, par un RGPDcontent...
 
-19. Editer le rendu templates/registration/register.html.twig comme ça par exemple :
+## 18. Editer le rendu templates/registration/register.html.twig comme ça par exemple :
 ```
 {% extends 'base.html.twig' %}
 
@@ -520,7 +520,7 @@ Vous pouvez aussi changer le agreeTerms, par un RGPDcontent...
 {% endblock %}
 
 ```
-20. Vous pouvez ajouter les classes Bootstrap au niveau du twig ou au niveau du formulaire (RegistrationFormType.php) :
+## 19. Vous pouvez ajouter les classes Bootstrap au niveau du twig ou au niveau du formulaire (RegistrationFormType.php) :
 ci dessous l'ajout de class Bootstrap, les imports des class type de symfony et la mise en place de la confirmation du mot de passe :
 
 ```
@@ -632,7 +632,7 @@ class RegistrationFormType extends AbstractType
 }
 
 ```
-21. On peut dès lors modifier le template _header.html.twig et décommenter les quelques lignes qui nous empêchait jusqu'alors de rendre l'affichage :
+## 20. On peut dès lors modifier le template _header.html.twig et décommenter les quelques lignes qui nous empêchait jusqu'alors de rendre l'affichage :
 ```
 <ul class="navbar-nav ms-auto">
       {% if app.user %}
