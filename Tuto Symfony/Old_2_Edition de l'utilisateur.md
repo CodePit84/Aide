@@ -586,6 +586,8 @@ class UserPasswordType extends AbstractType
 }
 ```
 ## 7. Puis nous devons créer le rendu de ce formulaire : edit_password.html.twig
+Toujours au niveau de templates/registration
+
 ```
 {% extends 'base.html.twig' %}
 
@@ -605,3 +607,89 @@ class UserPasswordType extends AbstractType
     </div>
 {% endblock %}
 ```
+## 8. Nous devons rendre le lien actif vers cette nouvelle route au niveau de nos vues (templates/registration/edit_user.html.twig) et de notre barre de navigation (templates/partials/_header.html.twig)
+
+templates/registration/edit_user.html.twig :
+``` 
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil utilisateur{% endblock %}
+
+{% block body %}
+<section class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Modification du profil utilisateur</h1>
+
+            {{ form_start(editUserForm) }}
+                <fieldset class="mb-3">
+                    <legend>Mon identité</legend>
+                    {{ form_row(editUserForm.name) }}
+                    {{ form_row(editUserForm.email) }}
+                </fieldset>
+                    {{ form_row(editUserForm.plainPassword) }}
+
+                <button type="submit" class="btn btn-primary btn-lg my-3">Sauvegarder</button>
+                <a href="{{ path('app_edit_password_user', {id: app.user.id}) }}" class="btn btn-warning">Modifier le mot de passe</a>           
+            {{ form_end(editUserForm) }} 
+        </div>
+    </div>
+</section>
+{% endblock %}
+``` 
+
+templates/partials/_header.html.twig :
+``` 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">SymBetcheck</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        {% if app.user %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_movement_user', {id: app.user.id}) }}">Consulter</a>
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajouter </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ path('app_movement_addDeposit_user', {id: app.user.id}) }}">Une dépense</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('app_movement_addWithdraw_user', {id: app.user.id}) }}">Un encaissement</a>
+          </div>
+        </li>
+        {% endif %}
+        {# <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li> #}
+      </ul>
+      <ul class="navbar-nav ms-auto">
+      {% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_edit_user', {id: app.user.id}) }}">Mon profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout') }}">Me déconnecter</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_register') }}">M'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Me Connecter</a>
+        </li>      
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+``` 
+ 
+Voilà ! Tout est Ok !
