@@ -2,6 +2,7 @@
 
 ## 1. Rajouter dans l'Entity User.php :
 ``` private ?string $plainPassword = null; ```
+
 au dessus de :
 ``` 
     /**
