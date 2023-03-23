@@ -37,8 +37,12 @@ jQuery(document).ready(function() {
     });
 });
 ```  
-Voilà c'est tout !
+Au niveau de nos formulaires réclamant la date on mettra :
+```
+xxxxxxxxxx
+```  
 
+_____________________
 ce qui donnera base.html.twig :
 ``` 
 <!DOCTYPE html>
