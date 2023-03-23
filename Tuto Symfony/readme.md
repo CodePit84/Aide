@@ -1,19 +1,19 @@
-## Tuto Symfony
+# Tuto Symfony
 
-1. Aller dans le dossier où le projet sera créé :
+## 1. Aller dans le dossier où le projet sera créé :
 ```cd Workspace```
 
-2. ```symfony new --webapp nomduprojet```
+## 2. ```symfony new --webapp nomduprojet```
 
-3. Créer un .env.local et modifier .env
+## 3. Créer un .env.local et modifier .env
 
 Ne pas laisser APP_SECRET et DATABASE_URL dans le .env et le mettre dans le .env.local
 
-4. ```symfony console doctrine:database:create``` ou d:d:c
+## 4. ```symfony console doctrine:database:create``` ou d:d:c
 
 Répondez Entrée à chaque question.
 
-5. ```symfony console make:user```
+## 5. ```symfony console make:user```
 
 À noter que dans src/Entity/User.php :
 
@@ -23,7 +23,7 @@ Répondez Entrée à chaque question.
 
 Le champs Id étant automatiquement généré par Symfony !
 
-6. ```symfony console make:entity User```
+## 6. ```symfony console make:entity User```
 
 Pour ensuite ajouter des propriétés (ainsi que leurs get / set) à l'entité comme par exemple :
 
@@ -32,7 +32,7 @@ lastName, firstName, address, zipcode, city, phone, createdAt
 "createdAt" sera du type datetime_immutable.
 A noter que si propriété "zipcode" (code postale) choisir "string" de "5" caractères, sinon le premier zéro ne sera pas pris en compte pour les 9 premiers départements (ex : 03500) !! Pareil pour le numéro de téléphone ! ;)
 
-7. Dans Entity/User.php rajouter à la ligne $createdAt :
+## 7. Dans Entity/User.php rajouter à la ligne $createdAt :
 ```
 #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -46,7 +46,8 @@ A noter que si propriété "zipcode" (code postale) choisir "string" de "5" cara
         $this->createdAt = new \DateTimeImmutable();
     }
 ````  
-8. On va créer nos Entités, ici 1 seule (Movement) mais vous pouvez créer vos tables maintenant :
+## 8. On va créer nos Entités, ici 1 seule (Movement) mais vous pouvez créer vos tables maintenant :
+## :warning: Attention plus loin dans le tuto, je m'apperçois que c'est un erreur de mettre le champs "date" en "date_immutable" et qu'il faut mieux le mettre en "date", donc si possible le faire maintenant pour éviter la modif plus tard...
 ```
 symfony console make:entity
 ```
