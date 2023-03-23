@@ -1,6 +1,6 @@
 # On va personnaliser nos 404 et nos 403 !
 
-11 - Personnaliser les pages d'erreurs (Symfony 6) / Nouvelle Techno / https://youtu.be/BXMjfCk8DSY
+[11 - Personnaliser les pages d'erreurs (Symfony 6) / Nouvelle Techno / https://youtu.be/BXMjfCk8DSY]
 
 ## 1. Installer twigpack : 
 ``` 
