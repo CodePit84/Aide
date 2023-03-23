@@ -1,9 +1,9 @@
-# 1. On commence par créer le controller des Mouvements
+## 1. On commence par créer le controller des Mouvements
 ```
 symfony console make:controller MovementController
 ```
 
-# 2. On va editer notre controller : src/Controller/MovementController.php
+## 2. On va editer notre controller : src/Controller/MovementController.php
 ```
 <?php
 
@@ -30,7 +30,7 @@ class MovementController extends AbstractController
 ```
 Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs...
 
-# 3. On va éditer notre templates/movement/index.html.twig, pour avoir le rendu dans un tableau :
+## 3. On va éditer notre templates/movement/index.html.twig, pour avoir le rendu dans un tableau :
 ```
 {% extends 'base.html.twig' %}
 
@@ -89,7 +89,7 @@ Dans un premier temps on affichera TOUS les mouvements de TOUS les utilisateurs.
 {% endblock %}
 ```
 
-# 4. On va pouvoir procéder à la pagination 
+## 4. On va pouvoir procéder à la pagination 
 
 Il va falloir plus tard changer la requête de notre controller pour n'afficher que les mouvements de notre utilisateur ! Mais attaquons nous à la pagination, installons le bundle KNP-Paginator :
 
@@ -99,7 +99,7 @@ composer require knplabs/knp-paginator-bundle
 
 (la doc de KNP-Paginator est disponible sur GitHub : https://github.com/KnpLabs/KnpPaginatorBundle)
 
-# 5. Il va falloir copié le contenu yaml suivant (dispo sur la doc) :
+## 5. Il va falloir copié le contenu yaml suivant (dispo sur la doc) :
 
 ``` 
 knp_paginator:
@@ -179,7 +179,7 @@ On peut aussi le centrer en utilisant les classes de Bootstrap suivante ``` d-fl
 </div>
 ```
 
-# 6. On peut même au niveau de notre vue rajouter le nombre de mouvements.
+## 6. On peut même au niveau de notre vue rajouter le nombre de mouvements.
 KNPPaginator nous propose le twig suivant :
 ``` 
 <div class="count">
@@ -251,7 +251,7 @@ Que l'ont peut rajouter en haut, ce qui nous donnera au final :
     </div>
 {% endblock %}
 ```
-# 7. On va traduire notre Paginator et en profiter pour mettre le projet symfony en français !
+## 7. On va traduire notre Paginator et en profiter pour mettre le projet symfony en français !
 Dans config/services.yaml rajouter le paramètre suivant :
 ```
 parameters:
@@ -268,7 +268,7 @@ framework:
 ```
 Voilà c'est tout ! ;)
 
-# 8. On va changer notre requête pour n'afficher que les mouvements de l'utilisateur connecté !
+## 8. On va changer notre requête pour n'afficher que les mouvements de l'utilisateur connecté !
 Dans notre MovementController.php on va donc remplacer
 ```
 $movementRepository->findAll(),
@@ -290,7 +290,7 @@ $movementsUser = $movementRepository->findBy(['user' => $this->getUser()]);
         );
 ```
 
-# 9. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
+## 9. On va aussi vouloir afficher notre solde (la somme de tous les mouvements).
 Il va falloir ajouter dans la méthode la somme :
 ```
 <?php
@@ -427,7 +427,7 @@ On va aussi diviser par 100 dans la vue, car nos sommes sont entrées dans la ba
 {% endblock %}
 ``` 
 
-# 10. On va procéder maintenant à l'ajout d'un mouvement :
+## 10. On va procéder maintenant à l'ajout d'un mouvement :
 ```
 symfony console make:form
 ``` 
@@ -444,7 +444,7 @@ symfony console make:form
  created: src/Form/MovementFormType.php
 ```
 
-# 11. Créer une vue Ajout (templates)
+## 11. Créer une vue Ajout (templates)
 En fait ici on va en créer 2, c'est ce que j'ai choisi, 1 pour un dépot (addDeposit.html.twig), 1 pour un encaissement (addWithdraw.html.twig), dans templates/movement :
 
 - addDeposit.html.twig : 
@@ -580,7 +580,7 @@ class MovementFormType extends AbstractType
 ``` 
 A noté le 'divisor' => 100 au niveau de l'add('amount') car nos prix doivent être enregistrés en centimes dans la bdd !
 
-# :warning: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
+## :warning: On a fait une erreur lors de la création de l'entité, le champs date on l'a mis en DateTimeImmutable alors qu'il aurait fallu le mettre en simple Date.
 On va corriger tout ça au niveau de notre Entity/Mouvement.php et remplacer le champs ainsi que ses get/set :
 ```
     // #[ORM\Column(type: Types::DATE_IMMUTABLE)]
@@ -623,10 +623,10 @@ symfony console make:migration
 (symfony console d:m:m)
 symfony console d:f:l
 ```
-# 12. On peut intégrer aussi les classes de formulaire de Bootstrap automatiquement comme ceci :
+## 12. On peut intégrer aussi les classes de formulaire de Bootstrap automatiquement comme ceci :
 https://github.com/CodePit84/Aide/blob/main/Tuto%20Symfony/Int%C3%A9grer%20les%20classes%20Bootstrap%20pour%20les%20formulaires.md
 
-# 13. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
+## 13. Ensuite au niveau de notre MovementController il faudra lui créer une route et une méthode :
 (en fait 2 car on a 2 méthodes, une pour le deposit et une pour le withdraw :
 ``` 
 <?php
@@ -751,7 +751,7 @@ class MovementController extends AbstractController
 }
 ```
 
-# 14. Passons à l'édition, celà sera relativement pareil !
+## 14. Passons à l'édition, celà sera relativement pareil !
 Créons une route au niveau de notre Controller :
 ```
 #[Route('/movement/edit/{id}', name: 'app_movement_edit')]
@@ -829,7 +829,7 @@ On crée donc donc un fichier edit.html.twig :
 ```
 Voilà l'édition est terminé, On peut Voir les mouvements, en Ajouter, les Editer, il nous reste plus qu'à pouvoir les Supprimer ! ;)
 
-# 15. Suppression d'un mouvement
+## 15. Suppression d'un mouvement
 Dans le controller on rajoutera la route suivante :
 ``` 
     #[Route('/movement/delete/{id}', name: 'app_movement_delete')]
@@ -844,7 +844,7 @@ Dans le controller on rajoutera la route suivante :
     }
 ``` 
 
-# 16. La sécurité des accès à nos Routes :
+## 16. La sécurité des accès à nos Routes :
 Il va falloir tout sécuriser pour qu'un utilisateur n'aie accès qu'à ses propres mouvements...
 Pour celà nous devons rajouter dans notre function : ``` User $choosenUser ```  une Route Security au dessus de la Route ``` #[Security("is_granted('ROLE_USER') and user === choosenUser")] ``` et pour certaine Route ``` #[Security("is_granted('ROLE_USER') and user === movement.getUser()")] ``` et le use qui va avec ``` use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; ``` pour qu'on obtienne au final un MovementController.php ainsi :
 ``` 
@@ -1086,7 +1086,7 @@ parce que l'id demandé doit être du type array et pas string...
 et que l'on doit rajouter dans la méthode ``` $userId = $movement->getUser()->getId(); ``` pour récupérer l'id de l'utilisateur courant...
 
     
-# 17 : On va devoir créer enfin nos liens dans nos vues pour facilement accéder à nos Routes :
+## 17 : On va devoir créer enfin nos liens dans nos vues pour facilement accéder à nos Routes :
 Dans un premier temps notre templates/partials/_header.html.twig
 ``` 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -1226,7 +1226,9 @@ et dans notre templates/movement/index.html.twig nos liens vers Modifier et Supp
 ```
 Voilà, c'est tout bon !
 
-# 18. On peut s'attaquer aussi aux contraintes dans les formulaires que l'on n'a pas ajouter :
+## 18. On peut s'attaquer à la suite, et rendre plus beau notre choix dans la date, pour celà je vous invite à aller à la suite : 
+
+https://github.com/CodePit84/Aide/blob/main/Tuto%20Symfony/5_DatePicker_Js.md
 
 
 
