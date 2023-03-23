@@ -867,7 +867,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MovementController extends AbstractController
 {
     /**
-     * This controller allows us to View / Display all movement's user
+     * This controller allows us to View / Display all user's movements
      *
      * @param User $choosenUser
      * @param MovementRepository $movementRepository
