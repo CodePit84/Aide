@@ -1,6 +1,6 @@
 # Mise en place de l'edition d'un utilisateur et de la modification de son mot de passe (sur une autre page) :
 
-1. Rajouter dans l'Entity User.php :
+## 1. Rajouter dans l'Entity User.php :
 ``` private ?string $plainPassword = null; ```
 au dessus de :
 ``` 
@@ -233,8 +233,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 }
 ``` 
 
-2 . Créer un formulaire d'édition du profil EditUserFormType.php 
-(on ne s'occupera pas du mot de passe à modifier, le mot de passe servira à valider les changements)
+## 2 . Créer un formulaire à la main d'édition du profil EditUserFormType.php
+Nouveau Fichier dans src/Form
+
+(on ne s'occupera pas de la modification du mot de passe, on le verra dans une autre méthode, on ne s'occupera que de la modification du profil de l'utilisateur, le mot de passe demandé servira seulement à valider les changements)
 
 
 ``` 
@@ -294,7 +296,8 @@ class EditUserFormType extends AbstractType
     }
 }
 ```
-3. Dans le UserController.php rajouter la méthode d'édition :
+## 3. On créera à la main également le fichier UserController.php 
+dans src/Controller et on rajoutera la méthode d'édition :
 ``` 
 <?php
 
@@ -361,7 +364,8 @@ class UserController extends AbstractController
     }        
 }
 ```
-4. Nous devons créer le rendu du formulaire : edit_user.html.twig
+## 4. Nous devons créer le rendu du formulaire : edit_user.html.twig
+
 ```
 {% extends 'base.html.twig' %}
 
@@ -391,9 +395,9 @@ class UserController extends AbstractController
 ``` 
 
 
-5. Pour l'edition (modification) du mot de passe :
+## 5. Pour l'édition (modification) du mot de passe :
 On rajoute la nouvelle méthode (editPassword) dans le UserController.php
-(pour plus de lisibilité je met ci-dessous la totalité du fichier UserController.php
+(pour plus de lisibilité je mets ci-dessous la totalité du fichier UserController.php :
 ```
 <?php
 
@@ -521,7 +525,7 @@ class UserController extends AbstractController
 
 }
 ```
-6. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordType.php
+## 6. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordType.php
 ```
 <?php
 
@@ -582,7 +586,7 @@ class UserPasswordType extends AbstractType
     }
 }
 ```
-7. Puis nous devons créer le rendu de ce formulaire : edit_password.html.twig
+## 7. Puis nous devons créer le rendu de ce formulaire : edit_password.html.twig
 ```
 {% extends 'base.html.twig' %}
 
