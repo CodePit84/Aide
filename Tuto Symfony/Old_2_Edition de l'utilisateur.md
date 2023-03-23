@@ -15,7 +15,8 @@ au dessus de :
 
 
 et les get / set :
-``` /**
+```
+    /**
      * Get the value of plainPassword
      */
     public function getPlainPassword()
