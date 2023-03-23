@@ -366,6 +366,9 @@ class UserController extends AbstractController
 }
 ```
 ## 4. Nous devons créer le rendu du formulaire : edit_user.html.twig
+au niveau du dossier templates et par exemple dans le sous-dossier registration
+
+templates/registration/edit_user.html.twig :
 
 ```
 {% extends 'base.html.twig' %}
@@ -381,7 +384,7 @@ class UserController extends AbstractController
             {{ form_start(editUserForm) }}
                 <fieldset class="mb-3">
                     <legend>Mon identité</legend>
-                    {{ form_row(editUserForm.nickname) }}
+                    {{ form_row(editUserForm.name) }}
                     {{ form_row(editUserForm.email) }}
                 </fieldset>
                     {{ form_row(editUserForm.plainPassword) }}
@@ -406,7 +409,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditUserFormType;
-use App\Form\UserPasswordType;
+use App\Form\UserPasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -490,7 +493,7 @@ class UserController extends AbstractController
         EntityManagerInterface $manager,
         UserPasswordHasherInterface $hasher
     ): Response {
-        $form = $this->createForm(UserPasswordType::class);
+        $form = $this->createForm(UserPasswordFormType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -526,7 +529,8 @@ class UserController extends AbstractController
 
 }
 ```
-## 6. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordType.php
+## 6. Nous devons aussi créer le Fomulaire d'édition du mot de passe de l'utilisateur : UserPasswordFormType.php
+Toujours dans src/Form
 ```
 <?php
 
