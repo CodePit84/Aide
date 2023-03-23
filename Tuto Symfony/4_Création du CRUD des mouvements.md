@@ -1142,3 +1142,91 @@ Dans un premier temps notre templates/partials/_header.html.twig
 ```
 
 J'ai laissé vonlontaire en commentaire le futur lien pour l'édition du profil...
+
+et dans notre templates/movement/index.html.twig nos liens vers Modifier et Supprimer :
+``` 
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Mouvements{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        {# Conditions si Mouvements ou Pas : #}
+        {% if not movements.items is same as ([]) %}
+
+        <h3>Mouvements de {{ app.user.name }}</h3> 
+                <div class="ml-auto p-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex">
+                        Solde :
+                        {% if sum > 0 %}
+                            <span class="badge rounded-pill bg-success mx-2">{{ sum / 100 }} €</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger mx-2">{{ sum / 100 }} €</span>
+                        {% endif %}
+                        </div>
+                        <div class="d-flex">
+                        ({{ movements.getTotalItemCount }} mouvements)
+                        </div>
+                    </div>
+                </div>
+
+        <table class="table table-hover mt-4">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Mouvements en €</th>
+                            <th>Endroit</th>
+                            <th>Date</th>
+                            <th>User ID</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movement in movements %}
+                        {# {% for movement in movement.user_id %} #}
+
+                            {# {{ dump(movement) }} #}
+
+                            <tr class="table-info">
+                                <td>{{ movement.id }}</td>
+                                {% if movement.amount <0 %}
+                                    <td class="text-danger"><strong>{{ movement.amount / 100 }}<strong></td>
+                                {% else %}
+                                    <td class="text-success"><strong>+{{ movement.amount / 100 }}<strong></td>
+                                
+                                {% endif %}
+                                
+                                <td>{{ movement.place }}</td>
+                                <td>{{ movement.date.format('d/m/Y') }}</td>
+                                <td>{{ movement.user.id }}</td>
+                                <td>
+                                    <a href="{{ path('app_movement_edit', {id: movement.id}) }}" class="btn btn-info btn-sm">Modifier</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_movement_delete', {id: movement.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous réellement supprimer ce mouvement ?')">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="navigation d-flex justify-content-center mt-4">
+                    {{ knp_pagination_render(movements) }}
+                </div>
+
+        {% else %}
+            <h4>Il n'y a pas de mouvements</h4>
+        {% endif %}
+
+    </div>
+{% endblock %}
+```
+Voilà, c'est tout bon !
+
+# 18. On peut s'attaquer aussi aux contraintes dans les formulaires que l'on n'a pas ajouter :
+
+
+
