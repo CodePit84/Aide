@@ -2,6 +2,18 @@
 
 1. Rajouter dans l'Entity User.php :
 ``` private ?string $plainPassword = null; ```
+au dessus de :
+``` 
+    private ?string $plainPassword = null;
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+``` 
+
+
 et les get / set :
 ``` /**
      * Get the value of plainPassword
@@ -23,6 +35,12 @@ et les get / set :
         return $this;
     }
 ```
+
+ainsi on aura User.php :
+``` 
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+``` 
+
 2 . Créer un formulaire d'édition du profil EditUserFormType.php 
 (on ne s'occupera pas du mot de passe à modifier, le mot de passe servira à valider les changements)
 
