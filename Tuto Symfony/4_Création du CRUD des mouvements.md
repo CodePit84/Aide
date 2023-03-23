@@ -846,7 +846,7 @@ Dans le controller on rajoutera la route suivante :
 
 # 16. La sécurité des accès à nos Routes :
 Il va falloir tout sécuriser pour qu'un utilisateur n'aie accès qu'à ses propres mouvements...
-Pour celà nous devons rajouter dans notre function : ``` User $choosenUser ```  une Route Security au dessus de la Route ``` #[Security("is_granted('ROLE_USER') and user === choosenUser")] ``` et le use qui va avec ``` use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; ``` pour qu'on obtienne au final un MovementController.php ainsi :
+Pour celà nous devons rajouter dans notre function : ``` User $choosenUser ```  une Route Security au dessus de la Route ``` #[Security("is_granted('ROLE_USER') and user === choosenUser")] ``` et pour certaine Route ``` #[Security("is_granted('ROLE_USER') and user === movement.getUser()")] ``` et le use qui va avec ``` use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security; ``` pour qu'on obtienne au final un MovementController.php ainsi :
 ``` 
 <?php
 
