@@ -61,5 +61,57 @@ use Symfony\Component\Validator\Constraints as Assert;
 et les contraintes sur nos champs :
 
 ``` 
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet e-mail')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email()]
+    #[Assert\Length(min:2, max : 180)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    #[Assert\NotNull()]
+    private array $roles = [];
+
+    private ?string $plainPassword = null;
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    #[Assert\NotBlank()]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    private ?string $name = null;
+
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
+    #[Assert\NotNull()]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Movement::class, orphanRemoval: true)]
+    #[Assert\NotNull()]
+    private Collection $movements;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->movements = new ArrayCollection();
+    }
 ``` 
+Et on va rajouter les mêmes contraintes au niveau de nos formulaires src/Form/RegistrationFormType.php et src/Form/EditUserFormType.php et src/Form/UserPasswordFormType.php :
+
+On va aussi rajouter un :
+``` 
+use Symfony\Component\Validator\Constraints as Assert;
+``` 
+et
