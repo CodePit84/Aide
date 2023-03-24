@@ -8,4 +8,16 @@ On va rajouter un :
 ``` 
 use Symfony\Component\Validator\Constraints as Assert;
 ``` 
-et les contraintes sur nos champs :
+et les contraintes sur nos champs, ici juste au niveau de notre "montant" et de la "date" qui ne devront pas être null :
+
+``` 
+    #[ORM\Column]
+    #[Assert\NotNull()]
+    private ?int $amount = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull()]
+    private ?\DateTimeInterface $date = null;
+``` 
+
+
