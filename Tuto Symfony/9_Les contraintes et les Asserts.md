@@ -115,3 +115,18 @@ On va aussi rajouter un :
 use Symfony\Component\Validator\Constraints as Assert;
 ``` 
 et
+
+
+
+
+
+
+
+et puisqu'on à toucher à nos entitées, il ne faut pas oublié de faire un :
+``` 
+symfony console make:migration
+``` 
+et
+``` 
+symfony console d:m:m
+``` 
