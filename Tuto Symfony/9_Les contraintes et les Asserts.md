@@ -1,7 +1,7 @@
 ## La validation des entités est très importante aux niveau de nos Entités et au niveau de nos formulaires !
 On va les mettre en place !
 
-## 1. Aux niveau des entités :
+Aux niveau des entités :
 - src/Entity/Movement.php :
 
 On va rajouter un :
@@ -114,13 +114,287 @@ On va aussi rajouter un :
 ``` 
 use Symfony\Component\Validator\Constraints as Assert;
 ``` 
-et
+et src/Form/RegistrationFormType.php :
+``` 
+<?php
 
+namespace App\Form;
 
+use App\Entity\User;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
+use Symfony\Component\Validator\Constraints as Assert;
 
+class RegistrationFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlenght' => '2',
+                    'maxlenght' => '180'
+                ],
+                'label' => 'E-mail',
+                'label_attr' => [
+                    'class' => 'form-label'    
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                    new Assert\Length(['min' => 2, 'max' => 180])
+                ]
+            ])
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control mb-3',
+                    'minlenght' => '2',
+                    'maxlenght' => '50',
 
+                ],
+                'label' => 'Nom / Prénom',
+                'label_attr' => [
+                    'class' => 'form-label'    
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 50])
+                ]
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Vous devez accepter nos conditions.',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-check-input mx-1 mt-3'
+                ],
+                'label' => 'J\'accepte l\'usage de mes coordonnées pour l\'utilisation de l\'application. Nous ne partagerons jamais données.',
+                'label_attr' => [
+                    'class' => 'form-label mt-3'    
+                ]
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label'    
+                    ]
+                ],
+                'second_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Confirmation du mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-3'    
+                    ]
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'mapped' => false,
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+                'label' => 'Mot de passe'
+            ])
+        ;
+    }
 
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
+    }
+}
+``` 
+
+et src/Form/EditUserFormType.php :
+``` 
+<?php
+
+namespace App\Form;
+
+use App\Entity\User;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class EditUserFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+        ->add('name', TextType::class, [
+            'attr' => [
+                'class' => 'form-control mb-3',
+                'minlenght' => '2',
+                'maxlenght' => '50',
+
+            ],
+            'label' => 'Nom / Prénom',
+            'label_attr' => [
+                'class' => 'form-label'    
+            ],
+            'constraints' => [
+                new Assert\NotBlank(),
+                new Assert\Length(['min' => 2, 'max' => 50])
+            ]
+        ])
+        ->add('email', EmailType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'minlenght' => '2',
+                'maxlenght' => '180'
+            ],
+            'label' => 'E-mail',
+            'label_attr' => [
+                'class' => 'form-label'    
+            ],
+            'constraints' => [
+                new Assert\NotBlank(),
+                new Assert\Email(),
+                new Assert\Length(['min' => 2, 'max' => 180])
+            ]
+        ])
+            ->add('plainPassword', PasswordType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Mot de passe',
+                'label_attr' => [
+                    'class' => 'form-label'
+                ]
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
+    }
+}
+``` 
+
+et src/Form/UserPasswordFormType.php :
+``` 
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+class UserPasswordFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('plainPassword', PasswordType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Mot de passe',
+                'label_attr' => [
+                    'class' => 'form-label  mt-4'
+                ]
+            ])
+            ->add('newPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'constraints' => [new Assert\NotBlank()],
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Nouveau mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label  mt-4'
+                    ]
+                ],
+                'second_options' => [
+                    'constraints' => [new Assert\NotBlank()],
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Confirmation du nouveau mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label  mt-4'
+                    ]
+                    ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'mapped' => false,
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary mt-4'
+                ],
+                'label' => 'Changer mon mot de passe'
+            ]);
+    }
+}
+``` 
 
 et puisqu'on à toucher à nos entitées, il ne faut pas oublié de faire un :
 ``` 
