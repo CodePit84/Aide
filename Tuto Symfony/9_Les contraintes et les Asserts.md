@@ -52,3 +52,14 @@ et des contraintes au niveau de nos 2 champs :
 ``` 
 Voilà pour les mouvements !
 
+- src/Entity/User.php :
+
+On va rajouter un :
+``` 
+use Symfony\Component\Validator\Constraints as Assert;
+``` 
+et les contraintes sur nos champs :
+
+``` 
+
+``` 
