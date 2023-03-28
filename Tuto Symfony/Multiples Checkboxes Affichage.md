@@ -30,7 +30,6 @@ Dans le FormulaireType.php :
             'attr' => [
                 'class' => 'checkbox-inline'
             ],
-            // et rajouter "form_themes: ['bootstrap_5_layout.html.twig']"" dans config/twig.yaml
             'choice_label' => 'name',
             'multiple' => true,
             'expanded' => true,
